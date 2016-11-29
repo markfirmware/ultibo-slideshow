@@ -10,18 +10,18 @@
 
 |Slide Show|Unit|Status|Priority|Effort|Notes
 |---|---|---|---|---|---
-|        | System | Complete | | | Some non relevant features not implemented
-|        | SysUtils | Complete | | | Some non relevant features not implemented
+|Yes - Core        | System | Complete | | | Some non relevant features not implemented
+|Yes - Core       | SysUtils | Complete | | | Some non relevant features not implemented
 |        | Classes | Complete | | | 
 |        | Crt | Complete | | | 
-|        | Dos | Complete | | | 
+|No - compatibility not needed       | Dos | Complete | | | 
 |        | Objpas | Complete | | | 
 |        | Iso7185 | Complete | | | Not tested 
 |        | Extpas | Complete | | | Not tested 
 |        | Strings | Complete | | | 
 |        | Math | Complete | | | Many functions not tested
 |        | Fgl | Complete | | | 
-|        | Macpas | Complete | | | Not tested 
+|No - not platform       | Macpas | Complete | | | Not tested 
 |        | Typinfo | Complete | | |
 |        | Types | Complete | | | 
 |        | RtlConsts | Complete | | | 
@@ -35,7 +35,7 @@
 |        | Unicodenumtable | Complete | | | Limited testing
 |        | Uuchar | Complete | | | 
 |        | Softfpu | Incomplete | Low | Moderate | 
-|        | Ufloat128 | Incomplete | Low | Minor | 
+|No        | Ufloat128 | Incomplete | Low | Minor | 
 |        | Heaptrc | Incomplete | Medium | Unknown | Unknown if this can be made to work with HeapManager
 |        | Exeinfo | Complete | | | Not tested
 
@@ -45,7 +45,7 @@
 |        | Chm | Complete | | | Limited testing 
 |        | Fastcgi | Complete | | | Limited testing
 |        | Fcl-base | Complete | | | Limited testing
-|        | Fcl-db | Complete | | | Limited testing
+|No database needed        | Fcl-db | Complete | | | Limited testing
 |        | Fcl-extra | Complete | | | Limited testing 
 |        | Fcl-fpcunit | Complete | | | Limited testing 
 |        | Fcl-image | Complete | | | Limited testing
@@ -109,12 +109,11 @@
 |        | Vector tables | Complete | | | 
 |        | Shutdown restart | Complete | | | Requires an interface to register shutdown handlers
 |        | Devices | Complete | | | 
-|        | Console | Complete | | | 
-|        | Fonts | Complete | | 
-|        | Selection of fonts available plus font tools
-|        | Keyboard | Complete | | | 
-|        | Mouse | Complete | | | 
-|        | Touch | Complete | | | Needs correct handling of scaling and calibration
+|No - Either Crt or FreeVision or Asphyre        | Console | Complete | | | 
+|        | Fonts | Complete | | | Selection of fonts available plus font tools
+|Yes        | Keyboard | Complete | | | 
+|Yes        | Mouse | Complete | | | 
+|Yes        | Touch | Complete | | | Needs correct handling of scaling and calibration
 |        | Keymaps | Complete | | | Keymaps included for US English, German, Spanish, French, UK English and US International
 |        | Code Pages | Implemented | Medium | Moderate | Functional but requires additional work 
 |        | Unicode | Implemented | Medium | Moderate | Functional but requires additional work 
@@ -126,20 +125,20 @@
 |Slide Show | Device | Status | Priority | Effort | Notes 
 |---|---|---|---|---|---
 |        | DMA | Complete | | | 
-|        | Framebuffer | Complete | | | 
+|Yes for display        | Framebuffer | Complete | | | 
 |        | GPIO | Complete | | | 
 |        | HDMI CEC | Incomplete | Medium | Unknown | CEC (Consumer Electronics Control) over HDMI. Seems to require support of the VideoCore IV GPU.
-|        | I2C | Complete | | | 
-|        | I2S | Incomplete | Medium | Moderate | 
-|        | MMC/SD | Complete | | | Requires support for eMMC and SDIO
+|No        | I2C | Complete | | | 
+|No        | I2S | Incomplete | Medium | Moderate | 
+|Yes for SD        | MMC/SD | Complete | | | Requires support for eMMC and SDIO
 |        | PWM | Complete | | | 
 |        | RTC | Complete | | 
-|        | Driver available for DS1307 chip
-|        | Serial | Complete | | | 
-|        | SPI | Complete | | | 
+|No        | Driver available for DS1307 chip
+|No        | Serial | Complete | | | 
+|No        | SPI | Complete | | | 
 |        | Counters (Timers) | Complete | | | Driver included for ARM timer on all Raspberry Pi models
 |        | TFT LCD | Complete | | | Drivers included for HX8357D and ILI9340 based SPI displays
-|        | UART | Complete | | | 
+|No        | UART | Complete | | | 
 |        | USB | Complete | | | Isochronous transfers not supported yet
 |        | USB Hubs | Complete | | | 
 |        | USB Keyboard | Complete | | | 
