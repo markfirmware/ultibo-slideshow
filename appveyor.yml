@@ -1,0 +1,10 @@
+install: bash -c scripts/install-ultibo.sh
+build_script: bash -c ./build.sh
+artifacts:
+  - path: kernel7.img
+    name: rpi3 kernel for testing
+cache:
+  - c:\Ultibo -> scripts/install-ultibo.sh
+skip_commits:
+  files:
+    - *.md
