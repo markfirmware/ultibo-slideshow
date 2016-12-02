@@ -15,6 +15,7 @@ function build-message {
 
 CFGRPI=rpi.cfg
 CFGRPI2=rpi2.cfg
+CFGRPI3=rpi3.cfg
 CFGQEMU=qemuvpb.cfg
 
 if [[ "$HOME" == "/home/pi" ]]
@@ -28,6 +29,7 @@ fi
 
 function build {
     build-message "compiling $PROJECT with $1 $2"
+    rm -f *.o
     $INSTALLPATH/fpc \
      -B \
      -Tultibo \
@@ -39,6 +41,4 @@ function build {
      $PROJECT
 }
 
-#build "-CpARMV6 -WpRPIB" $CFGRPI
-build "-CpARMV7A -WpRPI2B" $CFGRPI2
-#build "-CpARMV7A -WpQEMUVPB" $CFGQEMU
+build "-CpARMV7A -WpRPI3B" $CFGRPI3
