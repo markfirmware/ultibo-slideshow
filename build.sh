@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# build on raspbian, windows, and windows/appveyor
+# build on raspbian, windows/git/bash, and windows/appveyor
 
 PROJECT=pslideshow.lpr
 
@@ -13,31 +13,32 @@ function build-message {
     fi
 }
 
+CFGRPI=rpi.cfg
+CFGRPI2=rpi2.cfg
+CFGRPI3=rpi3.cfg
+CFGQEMU=qemuvpb.cfg
+
 if [[ "$HOME" == "/home/pi" ]]
 then
-    COMPILER=/home/pi/ultibo/core/fpc/bin/fpc
+    INSTALLPATH=/home/pi/ultibo/core/fpc/bin
     EXTRA=-XParm-none-eabi-
-    CFG=@/home/pi/ultibo/core/fpc/bin/rpi3.cfg
 else
-    COMPILER=/c/Ultibo/Core/fpc/3.1.1/bin/i386-win32/fpc
+    INSTALLPATH=/c/Ultibo/Core/fpc/3.1.1/bin/i386-win32
     EXTRA=
-    CFG=@/c/Ultibo/Core/fpc/3.1.1/bin/i386-win32/RPI3.CFG
 fi
 
-build-message "compiling $PROJECT"
-mkdir -p lib/arm-ultibo
-rm -rf lib/arm-ultibo/*
-$COMPILER \
- -a \
- -al \
- -B \
- -Tultibo \
- -Parm \
- -CpARMV7A \
- -WpRPI3B \
- -Scg \
- -FElib/arm-ultibo \
- $EXTRA \
- $CFG \
- -O2 \
- $PROJECT
+function build {
+    build-message "compiling $PROJECT with $1 $2"
+    rm -f *.o
+    $INSTALLPATH/fpc \
+     -B \
+     -Tultibo \
+     -O2 \
+     -Parm \
+     $1 \
+     @$INSTALLPATH/$2 \
+     $EXTRA \
+     $PROJECT
+}
+
+build "-CpARMV7A -WpRPI3B" $CFGRPI3
