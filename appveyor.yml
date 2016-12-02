@@ -1,4 +1,6 @@
-install: bash -c scripts/install-ultibo-1.3.015.sh
+install:
+  - bash -c scripts/install-ultibo-1.3.015.sh
+  - bash -c scripts/install-qemu.sh
 build_script: bash -c ./build.sh
 artifacts:
   - path: kernel7.img
