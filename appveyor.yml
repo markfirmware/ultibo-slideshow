@@ -7,4 +7,5 @@ cache:
   - c:\Ultibo -> scripts/install-ultibo.sh
 skip_commits:
   files:
-    - *.md
+    - README.md
+    - ultibounits.md
