@@ -28,17 +28,18 @@ else
 fi
 
 function build {
-    build-message "compiling $PROJECT with $1 $2"
     rm -f *.o
     $INSTALLPATH/fpc \
+     -dBUILD_$1 \
      -B \
      -Tultibo \
      -O2 \
      -Parm \
-     $1 \
-     @$INSTALLPATH/$2 \
-     $EXTRA \
+     $2 \
+     @$INSTALLPATH/$3 \
      $PROJECT
 }
 
-build "-CpARMV7A -WpRPI3B" $CFGRPI3
+build RPI "-CpARMV6 -WpRPIB" $CFGRPI
+build RPI2 "-CpARMV7A -WpRPI2B" $CFGRPI2
+build QEMU "-CpARMV7A -WpQEMUVPB" $CFGQEMU
