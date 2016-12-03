@@ -2,7 +2,11 @@ program pSlideShow;
 {$mode objfpc}{$H+}
 
 uses
- BCM2837, BCM2710, SysUtils, Crt;
+ {$Ifdef BUILD_RPI}  BCM2835, BCM2708, {$Endif}
+ {$Ifdef BUILD_RPI2} BCM2836, BCM2709, {$Endif}
+ {$Ifdef BUILD_RPI3} BCM2837, BCM2710, {$Endif}
+ {$Ifdef BUILD_QEMU} QEMUVersatilePB,  {$Endif}
+ SysUtils, Crt;
 
 var
  PhotoNumber:LongWord;
