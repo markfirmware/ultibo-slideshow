@@ -1,7 +1,6 @@
 #!/bin/bash
 set -x
 
-rm -f screen1.ppm
 ./scripts/test-with-qemu-monitor-commands.sh | /c/Ultibo/Core/qemu/qemu-system-arm.exe \
  -M versatilepb \
  -cpu cortex-a8 \
@@ -9,4 +8,5 @@ rm -f screen1.ppm
  -m 256M \
  -usb \
  -monitor stdio
-bash -c convert screen1.ppm screen1.png
+
+/c/ProgramData/chocolatey/lib/imagemagick.tool/tools/convert.exe test-with-qemu.ppm test-with-qemu.png

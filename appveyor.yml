@@ -1,6 +1,6 @@
 install:
   - bash -c scripts/install-ultibo-1.3.015.sh
-  - choco install imagemagick
+  - choco install imagemagick.tool
 build_script:
   - bash -c ./build.sh
   - bash -c ./scripts/test-with-qemu.sh
