@@ -9,4 +9,4 @@ rm -f screen1.ppm
  -m 256M \
  -usb \
  -monitor stdio
-convert screen1.ppm screen1.png
+bash -c convert screen1.ppm screen1.png
