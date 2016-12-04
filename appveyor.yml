@@ -1,5 +1,6 @@
 install:
   - bash -c scripts/install-ultibo-1.3.015.sh
+  - choco install imagemagick
 build_script: bash -c ./build.sh
 artifacts:
   - path: kernel.img
