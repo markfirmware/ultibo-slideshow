@@ -28,6 +28,7 @@ else
 fi
 
 function build {
+    build-message building $PROJECT for target $1
     rm -f *.o
     $INSTALLPATH/fpc \
      -dBUILD_$1 \
