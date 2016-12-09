@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ls -lt /c/ProgramData/chocolatey
+
 if [[ ! -e /c/ProgramData/chocolatey ]]
 then
     set -x
