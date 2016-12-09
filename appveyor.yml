@@ -1,6 +1,6 @@
 install:
   - bash -c scripts/install-ultibo-1.3.015.sh
-  - choco install imagemagick.tool
+  - bash -c scripts/install-choco-tools.sh
 build_script:
   - bash -c ./build.sh
   - bash -c ./scripts/test-with-qemu.sh
@@ -15,6 +15,7 @@ artifacts:
     name: screen shot from test
 cache:
   - c:\Ultibo -> scripts/install-ultibo-1.3.015.sh
+  - c:\ProgramData\chocolatey -> scripts/install-choco-tools.sh
 skip_commits:
   files:
     - README.md
