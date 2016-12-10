@@ -1,6 +1,6 @@
 # [Working Milestone due Thu 2016-12-15](https://github.com/markfirmware/ultibo-slideshow/milestones)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/02g7n8ir8a0qy024?svg=true)](https://ci.appveyor.com/project/markfirmware/ultibo-slideshow)
+[![Build status](https://ci.appveyor.com/api/projects/status/u62onrs418c0wbpb?svg=true)](https://ci.appveyor.com/project/markfirmware/ultiboslideshow)
 
 Discussion at https://ultibo.org/forum/viewtopic.php?f=9&t=406
 

@@ -7,6 +7,7 @@ set -x
  -kernel "$PWD/kernel.bin" \
  -m 256M \
  -usb \
- -monitor stdio
+ -monitor stdio \
+ -serial file:test-with-qemu.txt
 
 /c/ProgramData/chocolatey/lib/imagemagick.tool/tools/convert.exe test-with-qemu.ppm test-with-qemu.png

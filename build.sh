@@ -5,11 +5,10 @@
 PROJECT=pslideshow.lpr
 
 function build-message {
+    echo $*
     if [[ "$APPVEYOR" == "True" ]]
     then
-        appveyor AddMessage $*
-    else
-        echo $*
+        appveyor AddMessage "$*"
     fi
 }
 
@@ -28,9 +27,10 @@ else
 fi
 
 function build {
+    build-message building $PROJECT for target $1
     rm -f *.o
     $INSTALLPATH/fpc \
-     -dBUILD_$1 \
+     -dTARGET_$1 \
      -B \
      -Tultibo \
      -O2 \
@@ -40,6 +40,6 @@ function build {
      $PROJECT
 }
 
-build RPI "-CpARMV6 -WpRPIB" $CFGRPI
-build RPI2 "-CpARMV7A -WpRPI2B" $CFGRPI2
-build QEMU "-CpARMV7A -WpQEMUVPB" $CFGQEMU
+build RPI_INCLUDING_RPI0 "-CpARMV6 -WpRPIB" $CFGRPI
+build RPI2_INCLUDING_RPI3 "-CpARMV7A -WpRPI2B" $CFGRPI2
+build QEMU32 "-CpARMV7A -WpQEMUVPB" $CFGQEMU
