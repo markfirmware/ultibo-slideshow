@@ -6,7 +6,7 @@ uses
  {$Ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$Endif}
  {$Ifdef TARGET_RPI3}                BCM2837, BCM2710, {$Endif}
  {$Ifdef TARGET_QEMU32}              QEMUVersatilePB,  {$Endif}
- SysUtils, GlobalConfig, Platform, Serial, Logging, Crt;
+ StrUtils, SysUtils, GlobalConfig, Platform, Serial, Logging, Crt, uSlides;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, Qemu32);
@@ -32,9 +32,6 @@ begin
          {$Ifdef TARGET_QEMU32}              Qemu32 {$Endif};
 end;
 
-var
- PhotoNumber:LongWord;
-
 procedure StartLogging;
 begin
  if (Target = Qemu32) then
@@ -53,17 +50,32 @@ begin
   end;
 end;
 
+var
+ SlideNumber:LongWord;
+ LineNumber:LongWord;
+
 begin
  DetermineEntryState;
  StartLogging;
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
- PhotoNumber:=1;
+ SlideNumber:=SlidesFirstSlideNumber;
  while True do
   begin
    LoggingOutput('new frame');
    GotoXY(1,1);
-   WriteLn(Format('Photo number %d',[PhotoNumber]));
+   WriteLn(Format('Slide number %d',[SlideNumber]));
+   with Slides.Slides[SlideNumber] do
+    if Target = Qemu32 then
+     begin
+      for LineNumber:= 1 to Min(NumberOfLines,40) do
+       WriteLn(AnsiLeftStr(Lines[LineNumber],80));
+     end
+    else
+     begin
+      for LineNumber:= 1 to NumberOfLines do
+       WriteLn(Lines[LineNumber]);
+     end;
    Sleep(5*1000);
-   Inc(PhotoNumber);
+   SlideNumber:=SlidesNextSlideNumber(SlideNumber);
   end;
 end.

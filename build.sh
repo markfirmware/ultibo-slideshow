@@ -8,7 +8,7 @@ function build-message {
     echo $*
     if [[ "$APPVEYOR" == "True" ]]
     then
-        appveyor AddMessage $*
+        appveyor AddMessage "$*"
     fi
 }
 

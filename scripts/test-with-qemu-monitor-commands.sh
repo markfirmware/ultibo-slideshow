@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sleep 3
+sleep 2
 echo screendump test-with-qemu.ppm
 echo quit
