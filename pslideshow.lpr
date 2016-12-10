@@ -62,6 +62,7 @@ begin
  while True do
   begin
    LoggingOutput('new frame');
+   ClrScr;
    GotoXY(1,1);
    WriteLn(Format('Slide number %d',[SlideNumber]));
    with Slides.Slides[SlideNumber] do
