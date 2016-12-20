@@ -12,25 +12,30 @@ then
     ./ultibo-installer //verysilent
     ls /c/Ultibo
 
-    appveyor AddMessage "building ultibo rtl using __buildrtl.bat from $ULTIBO_RTL_VERSION"
-    curl -fsSL -o ultibo-rtl-update.zip https://github.com/ultibohub/Core/archive/master.zip
-    ls *.zip
+    if [[ "$ULTIBO_RTL_VERSION" == "$ULTIBO_VERSION" ]]
+    then
+        appveyor AddMessage "skipped building ultibo rtl using __buildrtl.bat from $ULTIBO_RTL_VERSION"
+    else
+        appveyor AddMessage "building ultibo rtl using __buildrtl.bat from $ULTIBO_RTL_VERSION"
+        curl -fsSL -o ultibo-rtl-update.zip https://github.com/ultibohub/Core/archive/master.zip
+        ls *.zip
 
-    appveyor AddMessage "extracting ultibo rtl source"
-    7z x -oultibo-rtl-update ultibo-rtl-update.zip
-    ls ultibo-rtl-update/Core-master/source/rtl/ultibo
+        appveyor AddMessage "extracting ultibo rtl source"
+        7z x -oultibo-rtl-update ultibo-rtl-update.zip
+        ls ultibo-rtl-update/Core-master/source/rtl/ultibo
     
-    appveyor AddMessage "moving ultibo rtl source into ultibo core folder"
-    ls $ULTIBO_SOURCE/rtl/ultibo
-    rm -rf $ULTIBO_SOURCE/rtl/ultibo
-    cp -a ultibo-rtl-update/Core-master/source/rtl/ultibo $ULTIBO_SOURCE/rtl/ultibo
-    ls $ULTIBO_SOURCE/rtl/ultibo
+        appveyor AddMessage "moving ultibo rtl source into ultibo core folder"
+        ls $ULTIBO_SOURCE/rtl/ultibo
+        rm -rf $ULTIBO_SOURCE/rtl/ultibo
+        cp -a ultibo-rtl-update/Core-master/source/rtl/ultibo $ULTIBO_SOURCE/rtl/ultibo
+        ls $ULTIBO_SOURCE/rtl/ultibo
 
-    appveyor AddMessage "compiling ultibo rtl"
-    cp -a scripts/__buildrtl-$ULTIBO_RTL_VERSION.bat $ULTIBO_SOURCE
-    cd $ULTIBO_SOURCE
-    cmd //c __buildrtl-$ULTIBO_RTL_VERSION.bat
-    cd $APPVEYOR_BUILD_FOLDER
+        appveyor AddMessage "compiling ultibo rtl"
+        cp -a scripts/__buildrtl-$ULTIBO_RTL_VERSION.bat $ULTIBO_SOURCE
+        cd $ULTIBO_SOURCE
+        cmd //c __buildrtl-$ULTIBO_RTL_VERSION.bat
+        cd $APPVEYOR_BUILD_FOLDER
+    fi
     
     appveyor AddMessage "ultibo installation complete"
 fi

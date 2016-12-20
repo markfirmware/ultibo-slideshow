@@ -4,6 +4,13 @@
 
 PROJECT=pslideshow.lpr
 
+if [[ "$HOME" == "/home/pi" ]]
+then
+    DEVPLATFORM=raspbian
+else
+    DEVPLATFORM=windows
+fi
+
 function build-message {
     echo $*
     if [[ "$APPVEYOR" == "True" ]]
@@ -17,7 +24,7 @@ CFGRPI2=rpi2.cfg
 CFGRPI3=rpi3.cfg
 CFGQEMU=qemuvpb.cfg
 
-if [[ "$HOME" == "/home/pi" ]]
+if [[ "$DEVPLATFORM" == "raspbian" ]]
 then
     INSTALLPATH=/home/pi/ultibo/core/fpc/bin
     EXTRA=-XParm-none-eabi-
@@ -42,4 +49,7 @@ function build {
 
 build RPI_INCLUDING_RPI0 "-CpARMV6 -WpRPIB" $CFGRPI
 build RPI2_INCLUDING_RPI3 "-CpARMV7A -WpRPI2B" $CFGRPI2
+if [[ "$DEVPLATFORM" == "windows" ]]
+then
 build QEMU32 "-CpARMV7A -WpQEMUVPB" $CFGQEMU
+fi
