@@ -1,6 +1,6 @@
-# [Working Milestone due Thu 2016-12-15](https://github.com/markfirmware/ultibo-slideshow/milestones)
+# Ultibo Slide Show Project
 
-[![Build status](https://ci.appveyor.com/api/projects/status/u62onrs418c0wbpb?svg=true)](https://ci.appveyor.com/project/markfirmware/ultiboslideshow)
+[![Build status](https://ci.appveyor.com/api/projects/status/u62onrs418c0wbpb?svg=true)](https://ci.appveyor.com/project/markfirmware/ultiboslideshow)[![CircleCI](https://circleci.com/gh/markfirmware/ultiboslideshow.svg?style=shield)](https://circleci.com/gh/markfirmware/ultiboslideshow)
 
 Discussion at https://ultibo.org/forum/viewtopic.php?f=9&t=406
 
