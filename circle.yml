@@ -4,4 +4,5 @@ dependencies:
     - docker pull markfirmware/ufpc
 test:
   override:
+    - echo
     - docker run --rm -v $(pwd):/workdir markfirmware/ufpc -i
