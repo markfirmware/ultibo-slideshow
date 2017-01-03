@@ -1,6 +1,6 @@
 dependencies:
   post:
-    - sudo apt-get install qemu-system-arm
+    - sudo 'apt-get update && sudo apt-get install -y qemu-system-arm'
     - sudo service docker start
     - docker pull markfirmware/ufpc
 test:
