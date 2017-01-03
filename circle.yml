@@ -1,6 +1,6 @@
 dependencies:
   post:
-    - docker restart
+    - sudo service docker start
     - docker pull markfirmware/ufpc
 test:
   override:
