@@ -1,3 +1,7 @@
+dependencies:
+  post:
+    - docker restart
+    - docker pull markfirmware/ufpc
 test:
   override:
-    - docker pull markfirmware/ufpc
+    - docker run --rm -v $(pwd):/workdir markfirmware/ufpc -i
