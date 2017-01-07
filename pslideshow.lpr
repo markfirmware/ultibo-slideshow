@@ -43,9 +43,6 @@ begin
  else
   begin
    LoggingDeviceSetTarget(LoggingDeviceFindByType(LOGGING_TYPE_FILE),'c:\ultiboslideshow.log');
-   //The next line normally isn't required but FileSysLoggingStart currently has
-   // a bug that causes it to fail if no target is specified on the command line
-   LoggingDeviceStart(LoggingDeviceFindByType(LOGGING_TYPE_FILE));
    LoggingDeviceSetDefault(LoggingDeviceFindByType(LOGGING_TYPE_FILE));
   end;
 end;

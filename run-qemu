@@ -1,0 +1,109 @@
+#!/usr/bin/python
+
+import os, parse, select, shutil, subprocess, sys
+from time import sleep
+
+def qemu (line):
+    global monitorptywrite
+    print 'qemu >>', line
+    monitorptywrite.write (line + "\n")
+
+def serial (line):
+    global serialptywrite
+    print 'serial >>', line
+    serialptywrite.write (line + "\015")
+
+def serialreadline ():
+    global serialptyread, seriallog
+    line = serialptyread.readline ()
+    print line
+    seriallog.write (line)
+
+def bash (lines):
+    for line in lines:
+        print 'bash >>', line
+        subprocess.check_call (line, shell=True)
+
+bash (['rm -rf run-qemu-output/',
+       'mkdir -p run-qemu-output'])
+
+seriallog = open ('run-qemu-output/serial.log', 'a')
+
+qemuprocess = subprocess.Popen (["qemu-system-arm",
+                                 "-M", "versatilepb",
+                                 "-cpu", "cortex-a8",
+                                 "-kernel", "kernel.bin",
+                                 "-m", "256M",
+                                 "-usb",
+                                 "-display", "none",
+                                 "-monitor", "pty",
+                                 "-serial", "pty"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+
+for i in range (10):
+    line = qemuprocess.stderr.readline ()
+    p = parse.parse ('char device redirected to {} (label {})', line)
+    if p:
+        if p.fixed [1] == 'compat_monitor0':
+            monitorpty = p.fixed [0]
+        if p.fixed [1] == 'serial0':
+            serialpty = p.fixed [0]
+
+sleep (0.5)
+monitorptyread = open (monitorpty, 'r')
+monitorptywrite = open (monitorpty, 'w')
+serialptyread = open (serialpty, 'r')
+serialptywrite = open (serialpty, 'w')
+
+def drainserial ():
+    while ([], [], []) != select.select ([serialptyread], [], [], 0):
+        sleep (0.001)
+        data = serialptyread.read (1)
+        seriallog.write (data)
+        if data == "":
+            break
+
+drainserial ()
+qemu ('screendump run-qemu-output/screen-01.ppm')
+sleep (7)
+qemu ('screendump run-qemu-output/screen-02.ppm')
+
+sleep (2)
+drainserial ()
+
+while ([], [], []) != select.select ([monitorptyread], [], [], 0):
+    sleep (0.001)
+    data = monitorptyread.read (1)
+    if data == "":
+        break
+    sys.stdout.write (data)
+qemu ('quit')
+sleep (2)
+drainserial ()
+while ([], [], []) != select.select ([monitorptyread], [], [], 0):
+    sleep (0.001)
+    data = monitorptyread.read (1)
+    if data == "":
+        break
+    sys.stdout.write (data)
+while qemuprocess.returncode == None:
+    sleep (0.001)
+    qemuprocess.poll ()
+    if ([], [], []) != select.select ([monitorptyread], [], [], 0):
+        sys.stdout.write (monitorptyread.read (1))
+
+print
+print 'qemu return code', qemuprocess.returncode
+
+monitorptyread.close ()
+monitorptywrite.close ()
+serialptyread.close ()
+serialptywrite.close ()
+seriallog.close ()
+
+bash (['convert run-qemu-output/screen-01.ppm run-qemu-output/screen-01.png',
+       'convert run-qemu-output/screen-02.ppm run-qemu-output/screen-02.png',
+       'rm run-qemu-output/*.ppm',
+       'file run-qemu-output/*',
+       'cat run-qemu-output/serial.log'])

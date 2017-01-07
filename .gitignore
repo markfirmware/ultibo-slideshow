@@ -7,3 +7,5 @@
 *.ppm
 *.ppu
 *.s
+*.tar
+run-qemu-output/
