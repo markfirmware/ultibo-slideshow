@@ -6,7 +6,7 @@ uses
  {$Ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$Endif}
  {$Ifdef TARGET_RPI3}                BCM2837, BCM2710, {$Endif}
  {$Ifdef TARGET_QEMU32}              QEMUVersatilePB,  {$Endif}
- StrUtils, SysUtils, GlobalConfig, Platform, Serial, Logging, Crt, uSlides;
+ StrUtils, SysUtils, GlobalConfig, Platform, Serial, Logging, Crt, uInit, uSlides;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, Qemu32);
