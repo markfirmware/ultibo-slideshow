@@ -8,4 +8,5 @@
 *.ppu
 *.s
 *.tar
+build-test-output/
 run-qemu-output/

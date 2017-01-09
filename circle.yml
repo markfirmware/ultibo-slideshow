@@ -14,7 +14,7 @@ test:
   override:
     - ./docker-test.sh
   post:
-    - mv output $CIRCLE_ARTIFACTS/build-test-output
-    - mkdir $CIRCLE_ARTIFACTS/kernels
+    - mv build-test-output $CIRCLE_ARTIFACTS
+    - mkdir -p $CIRCLE_ARTIFACTS/kernels
     - mv kernel*.img kernel.bin $CIRCLE_ARTIFACTS/kernels
     - cp -a run-qemu $CIRCLE_ARTIFACTS/kernels
