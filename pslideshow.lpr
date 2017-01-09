@@ -2,14 +2,14 @@ program pSlideShow;
 {$mode delphi}{$h+}
 
 uses
- {$Ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835, BCM2708, {$Endif}
- {$Ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$Endif}
- {$Ifdef TARGET_RPI3}                BCM2837, BCM2710, {$Endif}
- {$Ifdef TARGET_QEMU32}              QEMUVersatilePB,  {$Endif}
+ {$ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835, BCM2708, {$endif}
+ {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$endif}
+ {$ifdef TARGET_RPI3}                BCM2837, BCM2710, {$endif}
+ {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,  {$endif}
  StrUtils, SysUtils, GlobalConfig, Platform, Serial, Logging, Crt, uInit, uSlides;
 
 type
- TTarget = (Rpi, Rpi2, Rpi3, Qemu32);
+ TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
 
 function TargetToString(Target:TTarget):String;
 begin
@@ -17,7 +17,7 @@ begin
   Rpi: TargetToString:='Rpi';
   Rpi2: TargetToString:='Rpi2';
   Rpi3: TargetToString:='Rpi3';
-  Qemu32: TargetToString:='Qemu32';
+  QemuArm7a: TargetToString:='QemuArm7a';
  end;
 end;
 
@@ -26,15 +26,15 @@ var
 
 procedure DetermineEntryState;
 begin
- Target:={$Ifdef TARGET_RPI_INCLUDING_RPI0}  Rpi    {$Endif}
-         {$Ifdef TARGET_RPI2_INCLUDING_RPI3} Rpi2   {$Endif}
-         {$Ifdef TARGET_RPI3}                Rpi3   {$Endif}
-         {$Ifdef TARGET_QEMU32}              Qemu32 {$Endif};
+ Target:={$ifdef TARGET_RPI_INCLUDING_RPI0}  Rpi       {$endif}
+         {$ifdef TARGET_RPI2_INCLUDING_RPI3} Rpi2      {$endif}
+         {$ifdef TARGET_RPI3}                Rpi3      {$endif}
+         {$ifdef TARGET_QEMUARM7A}           QemuArm7a {$endif};
 end;
 
 procedure StartLogging;
 begin
- if (Target = Qemu32) then
+ if (Target = QemuArm7a) then
   begin
    SERIAL_REGISTER_LOGGING:=True;
    SerialLoggingDeviceAdd(SerialDeviceGetDefault);
@@ -63,7 +63,7 @@ begin
    GotoXY(1,1);
    WriteLn(Format('Slide number %d',[SlideNumber]));
    with Slides.Slides[SlideNumber] do
-    if Target = Qemu32 then
+    if Target = QemuArm7a then
      begin
       for LineNumber:= 1 to Min(NumberOfLines,40) do
        WriteLn(AnsiLeftStr(Lines[LineNumber],80));
