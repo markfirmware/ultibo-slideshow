@@ -1,7 +1,6 @@
 # Ultibo Slide Show Project
 
-[![Build status](https://ci.appveyor.com/api/projects/status/u62onrs418c0wbpb?svg=true)](https://ci.appveyor.com/project/markfirmware/ultiboslideshow)[![CircleCI](https://circleci.com/gh/markfirmware/ultiboslideshow.svg?style=shield)](https://circleci.com/gh/markfirmware/ultiboslideshow)
-
+[![Build status](https://ci.appveyor.com/api/projects/status/u62onrs418c0wbpb?svg=true)](https://ci.appveyor.com/project/markfirmware/ultiboslideshow)[![CircleCI](https://circleci.com/gh/markfirmware/ultibo-slideshow/tree/circleci-2.0.svg?style=svg)](https://circleci.com/gh/markfirmware/ultibo-slideshow/tree/circleci-2.0)
 Discussion at https://ultibo.org/forum/viewtopic.php?f=9&t=406
 
 This project utilizes [ultibo](https://ultibo.org) running on a raspberry pi to implement a photo slide show on an HDMI display (usually a television). Ultibo provides a system for programming pascal on bare hardware.
