@@ -1,1 +1,16 @@
 version: 2
+executorType: docker
+containerInfo:
+  - image: markfirmware/ultibo-bash-v3
+stages:
+  build:
+    workDir: ~/ultib-slideshow
+    steps:
+      - type: checkout
+      - name: Build and test
+        type: shell
+        command: ./build.sh
+      - name: Save artifacts
+        type: artifacts-store
+        path: build-output
+        destination: ultibo-slideshow
