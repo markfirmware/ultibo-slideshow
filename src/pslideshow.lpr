@@ -106,16 +106,8 @@ begin
    GotoXY(1,1);
    WriteLn(Format('Slide number %d',[SlideNumber]));
    with Slides.Slides[SlideNumber] do
-    if Target = QemuArm7a then
-     begin
-      for LineNumber:= 1 to Min(NumberOfLines,40) do
-       WriteLn(AnsiLeftStr(Lines[LineNumber],80));
-     end
-    else
-     begin
-      for LineNumber:= 1 to NumberOfLines do
-       WriteLn(Lines[LineNumber]);
-     end;
+    for LineNumber:= 1 to NumberOfLines do
+     WriteLn(Lines[LineNumber]);
    LoggingOutput('frame end');
    SaveFrameBuffer;
    Sleep(5*1000);
