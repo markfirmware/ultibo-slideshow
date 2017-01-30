@@ -54,7 +54,9 @@ var
 begin
  DetermineEntryState;
  StartLogging;
+ Sleep(3000);
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
+ LoggingOutput(Format('cmdline.txt <%s>',[CmdLine]));
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
   begin
