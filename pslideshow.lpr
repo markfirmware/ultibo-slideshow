@@ -6,31 +6,7 @@ uses
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$endif}
  {$ifdef TARGET_RPI3}                BCM2837, BCM2710, {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,  {$endif}
- StrUtils, SysUtils, GlobalConfig, Platform, Serial, Logging, Crt, uInit, uSlides;
-
-type
- TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
-
-function TargetToString(Target:TTarget):String;
-begin
- case Target of
-  Rpi: TargetToString:='Rpi';
-  Rpi2: TargetToString:='Rpi2';
-  Rpi3: TargetToString:='Rpi3';
-  QemuArm7a: TargetToString:='QemuArm7a';
- end;
-end;
-
-var
- Target:TTarget;
-
-procedure DetermineEntryState;
-begin
- Target:={$ifdef TARGET_RPI_INCLUDING_RPI0}  Rpi       {$endif}
-         {$ifdef TARGET_RPI2_INCLUDING_RPI3} Rpi2      {$endif}
-         {$ifdef TARGET_RPI3}                Rpi3      {$endif}
-         {$ifdef TARGET_QEMUARM7A}           QemuArm7a {$endif};
-end;
+ StrUtils, SysUtils, GlobalConfig, Platform, Serial, Logging, Crt, uInit, uSlides, uEnvironment;
 
 procedure StartLogging;
 begin
@@ -52,7 +28,6 @@ var
  LineNumber:LongWord;
 
 begin
- DetermineEntryState;
  StartLogging;
  Sleep(3000);
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
