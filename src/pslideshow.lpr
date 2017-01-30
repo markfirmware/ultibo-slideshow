@@ -101,7 +101,7 @@ begin
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
   begin
-   LoggingOutput('new frame');
+   LoggingOutput('frame start');
    ClrScr;
    GotoXY(1,1);
    WriteLn(Format('Slide number %d',[SlideNumber]));
@@ -116,6 +116,8 @@ begin
       for LineNumber:= 1 to NumberOfLines do
        WriteLn(Lines[LineNumber]);
      end;
+   LoggingOutput('frame end');
+   SaveFrameBuffer;
    Sleep(5*1000);
    SlideNumber:=SlidesNextSlideNumber(SlideNumber);
    if SlideNumber = SlidesFirstSlideNumber then
