@@ -25,10 +25,13 @@ begin
 end;
 
 function SlidesNextSlideNumber(N:LongWord):LongWord;
+var
+ Next:LongWord;
 begin
- SlidesNextSlideNumber:=N + 1;
- if SlidesNextSlideNumber > Slides.NumberOfSlides then
-  SlidesNextSlideNumber:=1;
+ Next:=N + 1;
+ if Next > Slides.NumberOfSlides then
+  Next:=1;
+ SlidesNextSlideNumber:=Next;
 end;
 
 procedure InitSlide;
