@@ -93,6 +93,22 @@ var
  SlideNumber:LongWord;
  LineNumber:LongWord;
 
+function EachClock(Clock:PClockDevice;Data:Pointer):DWord;
+var
+ Properties:TClockProperties;
+begin
+ LoggingOutput(Format('Clock.Device.DeviceName %s',[Clock^.Device.DeviceName]));
+ LoggingOutput(Format('Clock.Device.DeviceDescription %s',[Clock^.Device.DeviceDescription]));
+ ClockDeviceProperties(Clock,@Properties);
+ with Properties do
+  begin
+   LoggingOutput(Format('Clock.Flags %8.8x',[Flags]));
+   LoggingOutput(Format('Clock.MinRate %f',[MinRate / (1000*1000)]));
+   LoggingOutput(Format('Clock.MaxRate %f',[MaxRate / (1000*1000)]));
+  end;
+ EachClock:=0;
+end;
+
 function EachTimer(Timer:PTimerDevice;Data:Pointer):DWord;
 var
  Properties:TTimerProperties;
@@ -103,7 +119,7 @@ begin
  with Properties do
   begin
    LoggingOutput(Format('Timer.Bits %d',[Bits]));
-   LoggingOutput(Format('Timer.Flags %8.8x',[Bits]));
+   LoggingOutput(Format('Timer.Flags %8.8x',[Flags]));
    LoggingOutput(Format('Timer.MinRate %f',[MinRate / (1000*1000)]));
    LoggingOutput(Format('Timer.MaxRate %f',[MaxRate / (1000*1000)]));
    LoggingOutput(Format('Timer.MinInterval %f',[MinInterval / (1000*1000)]));
@@ -114,6 +130,8 @@ end;
 
 procedure LogFeatures;
 begin
+ LoggingOutput('Features ...');
+ ClockDeviceEnumerate(EachClock,nil);
  TimerDeviceEnumerate(EachTimer,nil);
 end;
 
