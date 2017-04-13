@@ -67,6 +67,7 @@ class TcpChannel:
             if ([], [], []) != select.select ([self.socket], [], [], 0):
                 sys.stdout.write (self.socket.recv (4096))
     def close (self):
+        self.logfile.write ('\n')
         self.logfile.close ()
         self.socket.close ()
 
