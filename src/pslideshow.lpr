@@ -144,6 +144,7 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
+ Sleep(3000);
  LogFeatures;
  InitializeFrameBuffer;
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
