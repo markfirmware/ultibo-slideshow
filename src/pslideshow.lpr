@@ -108,6 +108,11 @@ begin
   end;
  EachClock:=0;
 end;
+procedure Check(Status:Integer);
+begin
+ if Status <> 0 then
+  raise Exception.Create(Format('Exception - status code %d',[Status]));
+end;
 
 function EachTimer(Timer:PTimerDevice;Data:Pointer):DWord;
 var
@@ -115,7 +120,7 @@ var
 begin
  LoggingOutput(Format('Timer.Device.DeviceName %s',[Timer^.Device.DeviceName]));
  LoggingOutput(Format('Timer.Device.DeviceDescription %s',[Timer^.Device.DeviceDescription]));
- TimerDeviceProperties(Timer,@Properties);
+ Check(TimerDeviceProperties(Timer,@Properties));
  with Properties do
   begin
    LoggingOutput(Format('Timer.Bits %d',[Bits]));
@@ -131,10 +136,11 @@ end;
 procedure LogFeatures;
 begin
  LoggingOutput('Features ...');
- ClockDeviceEnumerate(EachClock,nil);
- TimerDeviceEnumerate(EachTimer,nil);
+ Check(ClockDeviceEnumerate(EachClock,nil));
+ Check(TimerDeviceEnumerate(EachTimer,nil));
 end;
 
+procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
@@ -158,4 +164,15 @@ begin
    if SlideNumber = SlidesFirstSlideNumber then
     LoggingOutput('program stop');
   end;
+end;
+
+begin
+ try
+  Main;
+ except on E:Exception do
+  begin
+   WriteLn(Format('Exception.Message %s',[E.Message]));
+   LoggingOutput(Format('Exception.Message %s',[E.Message]));
+  end;
+ end;
 end.
