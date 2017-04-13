@@ -15,7 +15,7 @@ function ultibo-bash-quotation {
     then
         echo -n $*
     else
-        local DOCKER_IMAGE=markfirmware/ultibo-bash
+        local DOCKER_IMAGE=markfirmware/ultibo-docker2-x64
         echo -en "docker run --rm -i -v $(pwd):/workdir --entrypoint /bin/bash $DOCKER_IMAGE -c \"$*\""
     fi
 }

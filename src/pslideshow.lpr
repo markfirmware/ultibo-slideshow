@@ -6,7 +6,7 @@ uses
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$endif}
  {$ifdef TARGET_RPI3}                BCM2837, BCM2710, {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,  {$endif}
- StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
+ Devices,StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
@@ -93,9 +93,34 @@ var
  SlideNumber:LongWord;
  LineNumber:LongWord;
 
+function EachTimer(Timer:PTimerDevice;Data:Pointer):DWord;
+var
+ Properties:TTimerProperties;
+begin
+ LoggingOutput(Format('Timer.Device.DeviceName %s',[Timer^.Device.DeviceName]));
+ LoggingOutput(Format('Timer.Device.DeviceDescription %s',[Timer^.Device.DeviceDescription]));
+ TimerDeviceProperties(Timer,@Properties);
+ with Properties do
+  begin
+   LoggingOutput(Format('Timer.Bits %d',[Bits]));
+   LoggingOutput(Format('Timer.Flags %8.8x',[Bits]));
+   LoggingOutput(Format('Timer.MinRate %f',[MinRate / (1000*1000)]));
+   LoggingOutput(Format('Timer.MaxRate %f',[MaxRate / (1000*1000)]));
+   LoggingOutput(Format('Timer.MinInterval %f',[MinInterval / (1000*1000)]));
+   LoggingOutput(Format('Timer.MaxInterval %f',[MaxInterval / (1000*1000)]));
+  end;
+ EachTimer:=0;
+end;
+
+procedure LogFeatures;
+begin
+ TimerDeviceEnumerate(EachTimer,nil);
+end;
+
 begin
  DetermineEntryState;
  StartLogging;
+ LogFeatures;
  InitializeFrameBuffer;
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
  SlideNumber:=SlidesFirstSlideNumber;
