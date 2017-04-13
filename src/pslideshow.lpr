@@ -2,10 +2,10 @@ program pSlideShow;
 {$mode delphi}{$h+}
 
 uses
- {$ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835, BCM2708, {$endif}
- {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836, BCM2709, {$endif}
- {$ifdef TARGET_RPI3}                BCM2837, BCM2710, {$endif}
- {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,  {$endif}
+ {$ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835,BCM2708,PlatformRPi      {$endif}
+ {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
+ {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
+ {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatfoemQemuVpb, {$endif}
  Devices,StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
 
 type
@@ -163,7 +163,6 @@ begin
  DetermineEntryState;
  StartLogging;
  InitializeFrameBuffer;
- Sleep(6000);
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
  LogFeatures;
  SlideNumber:=SlidesFirstSlideNumber;
