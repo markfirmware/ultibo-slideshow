@@ -93,13 +93,32 @@ var
  SlideNumber:LongWord;
  LineNumber:LongWord;
 
+procedure Check(Status:Integer);
+begin
+ if Status <> 0 then
+  raise Exception.Create(Format('Exception - status code %d',[Status]));
+end;
+
+function EachConsole(Console:PConsoleDevice;Data:Pointer):DWord;
+var
+ Properties:TConsoleProperties;
+begin
+ LoggingOutput(Format('Console.Device.DeviceName %s',[Console^.Device.DeviceName]));
+ LoggingOutput(Format('Console.Device.DeviceDescription %s',[Console^.Device.DeviceDescription]));
+ Check(ConsoleDeviceProperties(Console,@Properties));
+ with Properties do
+  begin
+  end;
+ EachConsole:=0;
+end;
+
 function EachClock(Clock:PClockDevice;Data:Pointer):DWord;
 var
  Properties:TClockProperties;
 begin
  LoggingOutput(Format('Clock.Device.DeviceName %s',[Clock^.Device.DeviceName]));
  LoggingOutput(Format('Clock.Device.DeviceDescription %s',[Clock^.Device.DeviceDescription]));
- ClockDeviceProperties(Clock,@Properties);
+ Check(ClockDeviceProperties(Clock,@Properties));
  with Properties do
   begin
    LoggingOutput(Format('Clock.Flags %8.8x',[Flags]));
@@ -107,11 +126,6 @@ begin
    LoggingOutput(Format('Clock.MaxRate %f',[MaxRate / (1000*1000)]));
   end;
  EachClock:=0;
-end;
-procedure Check(Status:Integer);
-begin
- if Status <> 0 then
-  raise Exception.Create(Format('Exception - status code %d',[Status]));
 end;
 
 function EachTimer(Timer:PTimerDevice;Data:Pointer):DWord;
@@ -136,6 +150,7 @@ end;
 procedure LogFeatures;
 begin
  LoggingOutput('Features ...');
+ Check(ConsoleDeviceEnumerate(EachConsole,nil));
  Check(ClockDeviceEnumerate(EachClock,nil));
  Check(TimerDeviceEnumerate(EachTimer,nil));
 end;
@@ -144,10 +159,10 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
- Sleep(3000);
- LogFeatures;
  InitializeFrameBuffer;
+ Sleep(6000);
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
+ LogFeatures;
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
   begin
