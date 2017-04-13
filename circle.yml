@@ -1,7 +1,7 @@
 version: 2
 executorType: docker
 containerInfo:
-  - image: markfirmware/ultibo-bash-v3
+  - image: markfirmware/ultibo-docker2-x64
 stages:
   build:
     workDir: ~/ultib-slideshow
