@@ -4,7 +4,7 @@ containerInfo:
   - image: markfirmware/ultibo-docker2-x64
 stages:
   build:
-    workDir: ~/ultib-slideshow
+    workDir: ~/ultibo-slideshow
     steps:
       - type: checkout
       - name: Build and test
