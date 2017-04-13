@@ -5,7 +5,7 @@ uses
  {$ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835,BCM2708,PlatformRPi      {$endif}
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
- {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatfoemQemuVpb, {$endif}
+ {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
  Devices,StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
 
 type
