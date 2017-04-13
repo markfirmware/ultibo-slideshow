@@ -105,9 +105,12 @@ var
 begin
  LoggingOutput(Format('Console.Device.DeviceName %s',[Console^.Device.DeviceName]));
  LoggingOutput(Format('Console.Device.DeviceDescription %s',[Console^.Device.DeviceDescription]));
- Check(ConsoleDeviceProperties(Console,@Properties));
+ Check(ConsoleDeviceGetProperties(Console,@Properties));
  with Properties do
   begin
+// LoggingOutput(Format('Console.Flags %8.8x',[Flags]));
+// LoggingOutput(Format('Console.Width %u',[Width]));
+// LoggingOutput(Format('Console.Height %u',[Height]));
   end;
  EachConsole:=0;
 end;
