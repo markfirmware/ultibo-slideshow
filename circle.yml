@@ -10,6 +10,9 @@ stages:
       - name: Build and test
         type: shell
         command: ./build.sh
+      - name: List files
+        type: shell
+        command: ls -ltR
       - name: Save artifacts
         type: artifacts-store
         path: build-output
