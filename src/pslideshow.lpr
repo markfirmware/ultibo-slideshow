@@ -108,9 +108,9 @@ begin
  Check(ConsoleDeviceGetProperties(Console,@Properties));
  with Properties do
   begin
-// LoggingOutput(Format('Console.Flags %8.8x',[Flags]));
-// LoggingOutput(Format('Console.Width %u',[Width]));
-// LoggingOutput(Format('Console.Height %u',[Height]));
+   LoggingOutput(SysUtils.Format('Console.Flags %8.8x',[Flags]));
+   LoggingOutput(SysUtils.Format('Console.Width %u',[Width]));
+   LoggingOutput(SysUtils.Format('Console.Height %u',[Height]));
   end;
  EachConsole:=0;
 end;
