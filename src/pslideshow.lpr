@@ -115,6 +115,24 @@ begin
  EachConsole:=0;
 end;
 
+function EachFrameBuffer(FrameBuffer:PFrameBufferDevice;Data:Pointer):DWord;
+var
+ Properties:TFrameBufferProperties;
+begin
+ LoggingOutput(Format('FrameBuffer.Device.DeviceName %s',[FrameBuffer^.Device.DeviceName]));
+ LoggingOutput(Format('FrameBuffer.Device.DeviceDescription %s',[FrameBuffer^.Device.DeviceDescription]));
+ Check(FrameBufferDeviceGetProperties(FrameBuffer,@Properties));
+ with Properties do
+  begin
+   LoggingOutput(SysUtils.Format('FrameBuffer.Flags %8.8x',[Flags]));
+   LoggingOutput(SysUtils.Format('FrameBuffer.PhysicalWidth %u',[PhysicalWidth]));
+   LoggingOutput(SysUtils.Format('FrameBuffer.PhysicalHeight %u',[PhysicalHeight]));
+   LoggingOutput(SysUtils.Format('FrameBuffer.VirtualWidth %u',[VirtualWidth]));
+   LoggingOutput(SysUtils.Format('FrameBuffer.VirtualHeight %u',[VirtualHeight]));
+  end;
+ EachFrameBuffer:=0;
+end;
+
 function EachClock(Clock:PClockDevice;Data:Pointer):DWord;
 var
  Properties:TClockProperties;
@@ -154,6 +172,7 @@ procedure LogFeatures;
 begin
  LoggingOutput('Features ...');
  Check(ConsoleDeviceEnumerate(EachConsole,nil));
+ Check(FrameBufferDeviceEnumerate(EachFrameBuffer,nil));
  Check(ClockDeviceEnumerate(EachClock,nil));
  Check(TimerDeviceEnumerate(EachTimer,nil));
 end;
