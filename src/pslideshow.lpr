@@ -163,6 +163,7 @@ begin
  DetermineEntryState;
  StartLogging;
  InitializeFrameBuffer;
+ Sleep(1000);
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
  LogFeatures;
  SlideNumber:=SlidesFirstSlideNumber;
