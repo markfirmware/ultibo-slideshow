@@ -111,14 +111,14 @@ function EachConsole(Console:PConsoleDevice;Data:Pointer):DWord;
 var
  Properties:TConsoleProperties;
 begin
- LoggingOutput(Format('Console.Device.DeviceName %s',[Console^.Device.DeviceName]));
- LoggingOutput(Format('Console.Device.DeviceDescription %s',[Console^.Device.DeviceDescription]));
+ LoggingOutput(Format('TConsoleDevice..Device.DeviceName %s',[Console^.Device.DeviceName]));
+ LoggingOutput(Format('TConsoleDevice..Device.DeviceDescription %s',[Console^.Device.DeviceDescription]));
  Check(ConsoleDeviceGetProperties(Console,@Properties));
  with Properties do
   begin
-   LoggingOutput(SysUtils.Format('Console.Flags %8.8x',[Flags]));
-   LoggingOutput(SysUtils.Format('Console.Width %u',[Width]));
-   LoggingOutput(SysUtils.Format('Console.Height %u',[Height]));
+   LoggingOutput(SysUtils.Format('TConsoleProperties.Flags %8.8x',[Flags]));
+   LoggingOutput(SysUtils.Format('TConsoleProperties.Width %u',[Width]));
+   LoggingOutput(SysUtils.Format('TConsoleProperties.Height %u',[Height]));
   end;
  EachConsole:=0;
 end;
@@ -127,16 +127,16 @@ function EachFrameBuffer(FrameBuffer:PFrameBufferDevice;Data:Pointer):DWord;
 var
  Properties:TFrameBufferProperties;
 begin
- LoggingOutput(Format('FrameBuffer.Device.DeviceName %s',[FrameBuffer^.Device.DeviceName]));
- LoggingOutput(Format('FrameBuffer.Device.DeviceDescription %s',[FrameBuffer^.Device.DeviceDescription]));
+ LoggingOutput(Format('TFrameBufferDevice.Device.DeviceName %s',[FrameBuffer^.Device.DeviceName]));
+ LoggingOutput(Format('TFrameBufferDevice.Device.DeviceDescription %s',[FrameBuffer^.Device.DeviceDescription]));
  Check(FrameBufferDeviceGetProperties(FrameBuffer,@Properties));
  with Properties do
   begin
-   LoggingOutput(SysUtils.Format('FrameBuffer.Flags %8.8x',[Flags]));
-   LoggingOutput(SysUtils.Format('FrameBuffer.PhysicalWidth %u',[PhysicalWidth]));
-   LoggingOutput(SysUtils.Format('FrameBuffer.PhysicalHeight %u',[PhysicalHeight]));
-   LoggingOutput(SysUtils.Format('FrameBuffer.VirtualWidth %u',[VirtualWidth]));
-   LoggingOutput(SysUtils.Format('FrameBuffer.VirtualHeight %u',[VirtualHeight]));
+   LoggingOutput(SysUtils.Format('TFrameBufferProperties.Flags %8.8x',[Flags]));
+   LoggingOutput(SysUtils.Format('TFrameBufferProperties.PhysicalWidth %u',[PhysicalWidth]));
+   LoggingOutput(SysUtils.Format('TFrameBufferProperties.PhysicalHeight %u',[PhysicalHeight]));
+   LoggingOutput(SysUtils.Format('TFrameBufferProperties.VirtualWidth %u',[VirtualWidth]));
+   LoggingOutput(SysUtils.Format('TFrameBufferProperties.VirtualHeight %u',[VirtualHeight]));
   end;
  EachFrameBuffer:=0;
 end;
@@ -145,14 +145,14 @@ function EachClock(Clock:PClockDevice;Data:Pointer):DWord;
 var
  Properties:TClockProperties;
 begin
- LoggingOutput(Format('Clock.Device.DeviceName %s',[Clock^.Device.DeviceName]));
- LoggingOutput(Format('Clock.Device.DeviceDescription %s',[Clock^.Device.DeviceDescription]));
+ LoggingOutput(Format('TClockDevice.Device.DeviceName %s',[Clock^.Device.DeviceName]));
+ LoggingOutput(Format('TClockDevice.Device.DeviceDescription %s',[Clock^.Device.DeviceDescription]));
  Check(ClockDeviceProperties(Clock,@Properties));
  with Properties do
   begin
-   LoggingOutput(Format('Clock.Flags %8.8x',[Flags]));
-   LoggingOutput(Format('Clock.MinRate %f',[MinRate / (1000*1000)]));
-   LoggingOutput(Format('Clock.MaxRate %f',[MaxRate / (1000*1000)]));
+   LoggingOutput(Format('TClockProperties.Flags %8.8x',[Flags]));
+   LoggingOutput(Format('TClockProperties.MinRate %f',[MinRate / (1000*1000)]));
+   LoggingOutput(Format('TClockProperties.MaxRate %f',[MaxRate / (1000*1000)]));
   end;
  EachClock:=0;
 end;
@@ -161,25 +161,23 @@ function EachTimer(Timer:PTimerDevice;Data:Pointer):DWord;
 var
  Properties:TTimerProperties;
 begin
- LoggingOutput(Format('Timer.Device.DeviceName %s',[Timer^.Device.DeviceName]));
- LoggingOutput(Format('Timer.Device.DeviceDescription %s',[Timer^.Device.DeviceDescription]));
+ LoggingOutput(Format('TTimerDevice.Device.DeviceName %s',[Timer^.Device.DeviceName]));
+ LoggingOutput(Format('TTimerDevice.Device.DeviceDescription %s',[Timer^.Device.DeviceDescription]));
  Check(TimerDeviceProperties(Timer,@Properties));
  with Properties do
   begin
-   LoggingOutput(Format('Timer.Bits %d',[Bits]));
-   LoggingOutput(Format('Timer.Flags %8.8x',[Flags]));
-   LoggingOutput(Format('Timer.MinRate %f',[MinRate / (1000*1000)]));
-   LoggingOutput(Format('Timer.MaxRate %f',[MaxRate / (1000*1000)]));
-   LoggingOutput(Format('Timer.MinInterval %f',[MinInterval / (1000*1000)]));
-   LoggingOutput(Format('Timer.MaxInterval %f',[MaxInterval / (1000*1000)]));
+   LoggingOutput(Format('TTimerProperties.Bits %d',[Bits]));
+   LoggingOutput(Format('TTimerProperties.Flags %8.8x',[Flags]));
+   LoggingOutput(Format('TTimerProperties.MinRate %f',[MinRate / (1000*1000)]));
+   LoggingOutput(Format('TTimerProperties.MaxRate %f',[MaxRate / (1000*1000)]));
+   LoggingOutput(Format('TTimerProperties.MinInterval %f',[MinInterval / (1000*1000)]));
+   LoggingOutput(Format('TTimerProperties.MaxInterval %f',[MaxInterval / (1000*1000)]));
   end;
  EachTimer:=0;
 end;
 
 procedure LogFeatures;
 begin
- LoggingOutput('');
- LoggingOutput('');
  LoggingOutput('Features ...');
  Check(DeviceEnumerate(DEVICE_CLASS_ANY,EachDevice,nil));
  Check(ConsoleDeviceEnumerate(EachConsole,nil));
@@ -194,6 +192,8 @@ begin
  StartLogging;
  InitializeFrameBuffer;
  Sleep(1000);
+ LoggingOutput('');
+ LoggingOutput('');
  LoggingOutput(Format('Target %s',[TargetToString(Target)]));
  LogFeatures;
  SlideNumber:=SlidesFirstSlideNumber;
