@@ -6,7 +6,9 @@ uses
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
- Classes,Devices,StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
+ Classes,Crt,Console,Devices,Framebuffer,GlobalConfig,GlobalConst,
+ Logging,Platform,Serial,StrUtils,SysUtils,
+ uInit,uSlides;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
@@ -185,6 +187,8 @@ begin
  DeviceListing.Sort;
  for S in DeviceListing do
   LoggingOutput(S);
+ LoggingOutput('');
+ LoggingOutput('');
  Check(ConsoleDeviceEnumerate(EachConsole,nil));
  Check(FrameBufferDeviceEnumerate(EachFrameBuffer,nil));
  Check(ClockDeviceEnumerate(EachClock,nil));
