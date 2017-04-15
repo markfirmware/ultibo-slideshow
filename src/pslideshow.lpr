@@ -101,10 +101,7 @@ end;
 
 function EachDevice(Device:PDevice;Data:Pointer):DWord;
 begin
-// LoggingOutput(Format('TDevice.DeviceClass %s',[DeviceClassToString(Device.DeviceClass)]));
-// LoggingOutput(Format('TDevice.DeviceName %s',[Device.DeviceName]));
-// LoggingOutput(Format('TDevice.DeviceDescription %s',[Device.DeviceDescription]));
- LoggingOutput(Format('%15s %20s %20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
+ LoggingOutput(Format('%15s %30s %20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
  Eachdevice:=0;
 end;
 
@@ -179,7 +176,7 @@ end;
 
 procedure LogFeatures;
 begin
- LoggingOutput('Features ...');
+ LoggingOutput('Devices ...');
  Check(DeviceEnumerate(DEVICE_CLASS_ANY,EachDevice,nil));
  Check(ConsoleDeviceEnumerate(EachConsole,nil));
  Check(FrameBufferDeviceEnumerate(EachFrameBuffer,nil));
