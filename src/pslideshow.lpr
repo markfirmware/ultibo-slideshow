@@ -101,7 +101,7 @@ end;
 
 function EachDevice(Device:PDevice;Data:Pointer):DWord;
 begin
- LoggingOutput(Format('%15s %30s %20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
+ LoggingOutput(Format('%12s %35s %20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
  Eachdevice:=0;
 end;
 
