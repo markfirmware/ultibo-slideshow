@@ -101,9 +101,10 @@ end;
 
 function EachDevice(Device:PDevice;Data:Pointer):DWord;
 begin
- LoggingOutput(Format('TDevice.DeviceClass %s',[DeviceClassToString(Device.DeviceClass)]));
- LoggingOutput(Format('TDevice.DeviceName %s',[Device.DeviceName]));
- LoggingOutput(Format('TDevice.DeviceDescription %s',[Device.DeviceDescription]));
+// LoggingOutput(Format('TDevice.DeviceClass %s',[DeviceClassToString(Device.DeviceClass)]));
+// LoggingOutput(Format('TDevice.DeviceName %s',[Device.DeviceName]));
+// LoggingOutput(Format('TDevice.DeviceDescription %s',[Device.DeviceDescription]));
+ LoggingOutput(Format('%15s %20s %20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
  Eachdevice:=0;
 end;
 
@@ -111,8 +112,8 @@ function EachConsole(Console:PConsoleDevice;Data:Pointer):DWord;
 var
  Properties:TConsoleProperties;
 begin
- LoggingOutput(Format('TConsoleDevice..Device.DeviceName %s',[Console^.Device.DeviceName]));
- LoggingOutput(Format('TConsoleDevice..Device.DeviceDescription %s',[Console^.Device.DeviceDescription]));
+ LoggingOutput(Format('TConsoleDevice.Device.DeviceName %s',[Console^.Device.DeviceName]));
+ LoggingOutput(Format('TConsoleDevice.Device.DeviceDescription %s',[Console^.Device.DeviceDescription]));
  Check(ConsoleDeviceGetProperties(Console,@Properties));
  with Properties do
   begin
