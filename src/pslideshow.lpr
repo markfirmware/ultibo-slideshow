@@ -180,8 +180,8 @@ var
  S:String;
 begin
  LoggingOutput('Devices ...');
- Check(DeviceEnumerate(DEVICE_CLASS_ANY,EachDevice,nil));
  DeviceListing:=TStringList.Create;
+ Check(DeviceEnumerate(DEVICE_CLASS_ANY,EachDevice,nil));
  DeviceListing.Sort;
  for S in DeviceListing do
   LoggingOutput(S);
