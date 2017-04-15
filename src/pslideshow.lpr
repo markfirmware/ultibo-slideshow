@@ -6,7 +6,7 @@ uses
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
- Devices,StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
+ Classes,Devices,StrUtils,SysUtils,Framebuffer,GlobalConfig,GlobalConst,Platform,Serial,Logging,Console,Crt,uInit,uSlides;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
@@ -92,6 +92,7 @@ end;
 var
  SlideNumber:LongWord;
  LineNumber:LongWord;
+ DeviceListing:TStringList;
 
 procedure Check(Status:Integer);
 begin
@@ -101,7 +102,7 @@ end;
 
 function EachDevice(Device:PDevice;Data:Pointer):DWord;
 begin
- LoggingOutput(Format('%-12s %-35s %-20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
+ DeviceListing.Add(Format('%-12s %-35s %-20s',[Device.DeviceName,Device.DeviceDescription,DeviceClassToString(Device.DeviceClass)]));
  Eachdevice:=0;
 end;
 
@@ -175,9 +176,15 @@ begin
 end;
 
 procedure LogFeatures;
+var
+ S:String;
 begin
  LoggingOutput('Devices ...');
  Check(DeviceEnumerate(DEVICE_CLASS_ANY,EachDevice,nil));
+ DeviceListing:=TStringList.Create;
+ DeviceListing.Sort;
+ for S in DeviceListing do
+  LoggingOutput(S);
  Check(ConsoleDeviceEnumerate(EachConsole,nil));
  Check(FrameBufferDeviceEnumerate(EachFrameBuffer,nil));
  Check(ClockDeviceEnumerate(EachClock,nil));
