@@ -210,7 +210,7 @@ begin
  SerialDevice:=SerialDeviceFindByName(DeviceName);
  CheckNil(SerialDevice);
  LoggingOutput('serial open');
- Check(SerialDeviceOpen(SerialDevice,9600,SERIAL_DATA_8BIT,SERIAL_STOP_1BIT,SERIAL_PARITY_NONE,SERIAL_FLOW_NONE,0,0));
+ //Check(SerialDeviceOpen(SerialDevice,9600,SERIAL_DATA_8BIT,SERIAL_STOP_1BIT,SERIAL_PARITY_NONE,SERIAL_FLOW_NONE,0,0));
  LoggingOutput('serial write');
  Check(SerialDeviceWrite(SerialDevice,PChar(TestString),Length(TestString),SERIAL_WRITE_NONE,Count));
 end;
