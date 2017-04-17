@@ -209,7 +209,9 @@ const
 begin
  SerialDevice:=SerialDeviceFindByName(DeviceName);
  CheckNil(SerialDevice);
+ LoggingOutput('serial open');
  Check(SerialDeviceOpen(SerialDevice,9600,SERIAL_DATA_8BIT,SERIAL_STOP_1BIT,SERIAL_PARITY_NONE,SERIAL_FLOW_NONE,0,0));
+ LoggingOutput('serial write');
  Check(SerialDeviceWrite(SerialDevice,PChar(TestString),Length(TestString),SERIAL_WRITE_NONE,Count));
 end;
 
@@ -218,8 +220,7 @@ begin
  PL011UARTCreate(VERSATILEPB_UART1_REGS_BASE,'',VERSATILEPB_IRQ_UART1,PL011_UART_CLOCK_RATE);
  PL011UARTCreate(VERSATILEPB_UART2_REGS_BASE,'',VERSATILEPB_IRQ_UART2,PL011_UART_CLOCK_RATE);
  PL011UARTCreate(VERSATILEPB_UART3_REGS_BASE,'',VERSATILEPB_IRQ_SIC_UART3,PL011_UART_CLOCK_RATE);
- TestSerialDevice('Serial0');
- //TestSerialDevice('Serial1');
+ TestSerialDevice('Serial1');
  //TestSerialDevice('Serial2');
  //TestSerialDevice('Serial3');
 end;
