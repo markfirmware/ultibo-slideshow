@@ -6,6 +6,7 @@ uses
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
+ VersatilePb, PL011,
  Classes,Crt,Console,Devices,Framebuffer,GlobalConfig,GlobalConst,
  Logging,Platform,Serial,StrUtils,SysUtils,
  uInit,uSlides;
@@ -181,13 +182,11 @@ procedure LogFeatures;
 var
  S:String;
 begin
- LoggingOutput('Devices ...');
  DeviceListing:=TStringList.Create;
  Check(DeviceEnumerate(DEVICE_CLASS_ANY,EachDevice,nil));
  DeviceListing.Sort;
  for S in DeviceListing do
   LoggingOutput(S);
- LoggingOutput('');
  LoggingOutput('');
  Check(ConsoleDeviceEnumerate(EachConsole,nil));
  Check(FrameBufferDeviceEnumerate(EachFrameBuffer,nil));
@@ -198,10 +197,12 @@ end;
 procedure Main;
 begin
  DetermineEntryState;
+ PL011UARTCreate(VERSATILEPB_UART1_REGS_BASE,'',VERSATILEPB_IRQ_UART1,PL011_UART_CLOCK_RATE);
+ PL011UARTCreate(VERSATILEPB_UART2_REGS_BASE,'',VERSATILEPB_IRQ_UART2,PL011_UART_CLOCK_RATE);
+ PL011UARTCreate(VERSATILEPB_UART3_REGS_BASE,'',VERSATILEPB_IRQ_SIC_UART3,PL011_UART_CLOCK_RATE);
  StartLogging;
  InitializeFrameBuffer;
  Sleep(1000);
- LoggingOutput('');
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
