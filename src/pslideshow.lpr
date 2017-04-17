@@ -204,9 +204,9 @@ procedure TestSerialDevice(DeviceName:String);
 var
  SerialDevice:PSerialDevice;
  Count:Cardinal;
-const
- TestString='SerialDeviceWrite test' + Char(13) + Char(10);
+ TestString:String;
 begin
+ TestString=DeviceName + ' SerialDeviceWrite test' + Char(13) + Char(10);
  SerialDevice:=SerialDeviceFindByName(DeviceName);
  CheckNil(SerialDevice);
  //Check(SerialDeviceOpen(SerialDevice,9600,SERIAL_DATA_8BIT,SERIAL_STOP_1BIT,SERIAL_PARITY_NONE,SERIAL_FLOW_NONE,0,0));
