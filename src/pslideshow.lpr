@@ -232,8 +232,8 @@ begin
  StartLogging;
  InitializeFrameBuffer;
  Sleep(1000);
- LoggingOutput('');
  TestSerial;
+ LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
  LogFeatures;
