@@ -203,7 +203,8 @@ begin
  Sleep(1000);
  LoggingOutput('');
  LoggingOutput('');
- LoggingOutput(Format('Target %s',[TargetToString(Target)]));
+ LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
+ LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
  LogFeatures;
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
