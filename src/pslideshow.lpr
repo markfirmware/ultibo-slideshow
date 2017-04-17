@@ -227,7 +227,7 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
- TestSerial;
+ //TestSerial;
  InitializeFrameBuffer;
  Sleep(1000);
  LoggingOutput('');
