@@ -41,6 +41,7 @@ begin
   begin
    SERIAL_REGISTER_LOGGING:=True;
    SerialLoggingDeviceAdd(SerialDeviceGetDefault);
+   SERIAL_REGISTER_LOGGING:=False;
    LoggingDeviceSetDefault(LoggingDeviceFindByType(LOGGING_TYPE_SERIAL));
   end
  else
