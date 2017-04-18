@@ -7,8 +7,8 @@ uses
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
  VersatilePb, PL011,
- Classes,Crt,Console,Devices,Framebuffer,GlobalConfig,GlobalConst,
- Logging,Network,Platform,Serial,StrUtils,SysUtils,
+ Classes,Crt,Console,Devices,Framebuffer,GlobalConfig,GlobalConst,GlobalSock,
+ Ip,Logging,Network,Platform,Serial,StrUtils,SysUtils,Transport,Winsock2,
  uInit,uSlides;
 
 type
@@ -50,6 +50,9 @@ begin
    LoggingDeviceSetDefault(LoggingDeviceFindByType(LOGGING_TYPE_FILE));
   end;
 end;
+
+var
+ Winsock2TCPClient:TWinsock2TCPClient;
 
 const
  ScreenWidth=1920;
@@ -234,7 +237,7 @@ type
 
 function TAdapterTool.EachAdapter(NetworkAdapter:TNetworkAdapter):Boolean;
 begin
- LoggingOutput(Format('TNetworkAdapter %s Device %s',[NetworkAdapter.Name,NetworkAdapter.Device.Device.DeviceName]));
+ LoggingOutput(Format('TNetworkAdapter %s ip %s',[NetworkAdapter.Name]));
  EachAdapter:=True;
 end;
 
@@ -245,12 +248,28 @@ begin
  LoggingOutput('');
 end;
 
+var
+ IpAddress:String;
+
+procedure GetIpAddress;
+begin
+ IpAddress:=Winsock2TCPClient.LocalAddress;
+ while (IpAddress = '') or (IpAddress = '0.0.0.0') or (IpAddress = '255.255.255.255') do
+  begin
+   Sleep(100);
+   IpAddress:=Winsock2TCPClient.LocalAddress;
+  end;
+ LoggingOutput(Format('IP address %s',[IpAddress]));
+end;
+
 procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
  InitializeFrameBuffer;
  Sleep(1000);
+ Winsock2TCPClient:=TWinsock2TCPClient.Create;
+ GetIpAddress;
  TestSerial;
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
