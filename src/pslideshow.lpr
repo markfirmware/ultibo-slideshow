@@ -234,13 +234,15 @@ type
 
 function TAdapterTool.EachAdapter(NetworkAdapter:TNetworkAdapter):Boolean;
 begin
- LoggingOutput('adapter');
+ LoggingOutput(Format('TNetworkAdapter %s',[NetworkAdapter.Name]));
  EachAdapter:=True;
 end;
 
 procedure TAdapterTool.LogAdapters;
 begin
+ LoggingOutput('');
  AdapterManager.EnumerateAdapters(EachAdapter);
+ LoggingOutput('');
 end;
 
 procedure Main;
