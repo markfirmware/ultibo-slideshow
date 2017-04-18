@@ -8,7 +8,7 @@ uses
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
  VersatilePb, PL011,
  Classes,Crt,Console,Devices,Framebuffer,GlobalConfig,GlobalConst,
- Logging,Platform,Serial,StrUtils,SysUtils,
+ Logging,Network,Platform,Serial,StrUtils,SysUtils,
  uInit,uSlides;
 
 type
@@ -258,6 +258,7 @@ end;
 
 begin
  try
+  LOOPBACK_NETWORK_ENABLED:=True;
   Main;
  except on E:Exception do
   begin
