@@ -254,11 +254,11 @@ var
 procedure GetIpAddress;
 begin
  IpAddress:=Winsock2TCPClient.LocalAddress;
-// while (IpAddress = '') or (IpAddress = '0.0.0.0') or (IpAddress = '255.255.255.255') do
-//  begin
-//   Sleep(100);
-//   IpAddress:=Winsock2TCPClient.LocalAddress;
-//  end;
+ while (IpAddress = '') or (IpAddress = '0.0.0.0') or (IpAddress = '255.255.255.255') do
+  begin
+   Sleep(100);
+   IpAddress:=Winsock2TCPClient.LocalAddress;
+  end;
  LoggingOutput(Format('IP address %s',[IpAddress]));
 end;
 
@@ -269,7 +269,6 @@ begin
  InitializeFrameBuffer;
  Sleep(1000);
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
- Sleep(5000);
  GetIpAddress;
  TestSerial;
  LoggingOutput('');
