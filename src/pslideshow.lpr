@@ -258,7 +258,6 @@ end;
 
 begin
  try
-  LOOPBACK_NETWORK_ENABLED:=True;
   Main;
  except on E:Exception do
   begin
