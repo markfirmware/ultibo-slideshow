@@ -234,7 +234,7 @@ type
 
 function TAdapterTool.EachAdapter(NetworkAdapter:TNetworkAdapter):Boolean;
 begin
- LoggingOutput(Format('TNetworkAdapter %s',[NetworkAdapter.Name]));
+ LoggingOutput(Format('TNetworkAdapter %s Device %s',[NetworkAdapter.Name,NetworkAdapter.Device.Device.DeviceName]));
  EachAdapter:=True;
 end;
 
