@@ -226,6 +226,23 @@ begin
  TestSerialDevice('Serial3');
 end;
 
+type
+ TAdapterTool = class
+  function EachAdapter(NetworkAdapter:TNetworkAdapter):Boolean;
+  procedure LogAdapters;
+ end;
+
+function TAdapterTool.EachAdapter(NetworkAdapter:TNetworkAdapter):Boolean;
+begin
+ LoggingOutput('adapter');
+ EachAdapter:=True;
+end;
+
+procedure TAdapterTool.LogAdapters;
+begin
+ AdapterManager.EnumerateAdapters(EachAdapter);
+end;
+
 procedure Main;
 begin
  DetermineEntryState;
@@ -237,6 +254,7 @@ begin
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
  LogFeatures;
+ TAdapterTool.Create.LogAdapters;
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
   begin
