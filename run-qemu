@@ -105,8 +105,8 @@ serial = {}
 screennumber = 1
 framenumber = 1
 def drainall (message=""):
-#   if message != "":
-#       print "drainall " + message
+    if message != "":
+        print "drainall " + message
     for i in serial:
         serial [i].drain ()
     monitor.drain ()
