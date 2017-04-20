@@ -315,9 +315,9 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
- SetOnMsg(@Msg);
  Sleep(1000);
  TFTPStart;
+ SetOnMsg(@Msg);
  InitializeFrameBuffer;
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
  TestSerial;
