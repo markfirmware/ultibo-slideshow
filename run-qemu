@@ -44,7 +44,7 @@ class TcpChannel:
                         pass
                     elif c == '\n':
 #                       print '{}<<<<{}'.format(self.name, self.linebuffer)
-                        index = self.linebuffer.find ('TFTP Ready')
+                        index = self.linebuffer.find ('TFTP Ready.')
                         if index != -1:
 #                           print self.linebuffer
                             bash (['../../tftp.sh'])
