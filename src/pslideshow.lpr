@@ -336,7 +336,7 @@ procedure LogCommandLine;
 var
  I:Cardinal;
 begin
- for I:=0 to ParamCount - 1 do
+ for I:=0 to ParamCount do
   LoggingOutput(Format('Param %d = %s',[I,ParamStr(I)]));
 end;
 
