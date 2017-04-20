@@ -193,7 +193,7 @@ begin
   Threads.Min := 5;
   Threads.Max := 10;
   BufferSize := 1024;
-  BoundPort := 69;
+  BoundPort := 5069;
   Transfers := TList.Create;
   FRebootOnImg := true;
   FOnMsg := nil;
