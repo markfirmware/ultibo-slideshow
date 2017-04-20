@@ -310,7 +310,7 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
- Sleep(1000);
+ Sleep(2000);
  CreateRamDisk;
  InitializeFrameBuffer;
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
