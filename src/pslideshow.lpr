@@ -332,19 +332,19 @@ begin
  DetermineEntryState;
  StartLogging;
  Sleep(1000);
- SetOnMsg(@Msg);
  InitializeFrameBuffer;
  TestSerial;
  LoggingOutput('');
  IpAddress:=GetIpAddress;
  CreateRamDisk;
- TFTPStart;
  StartHttpServer;
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
  LogFeatures;
  TAdapterTool.Create.LogAdapters;
+ TFTPStart;
+ SetOnMsg(@Msg);
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
   begin
