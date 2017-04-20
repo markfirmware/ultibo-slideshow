@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tftp localhost 5069 << __EOF__
+tftp localhost 5070 << __EOF__
 verbose
 binary
 trace

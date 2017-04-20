@@ -200,7 +200,6 @@ begin
   { Define custom thread }
   OnCreateThread := @DoCreateThread;
   TxStream := TMemoryStream.Create;
-  DoMsg ('tftp started');
 end;
 
 
