@@ -1,4 +1,4 @@
-{$mode delphi}{$h+}
+ {$mode delphi}{$h+}
 
 uses
  {$ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835,BCM2708,PlatformRPi      {$endif}
