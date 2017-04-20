@@ -306,10 +306,16 @@ begin
   end;
 end;
 
+procedure Msg(Sender:TObject;S:String);
+begin
+ LoggingOutput(S);
+end;
+
 procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
+ SetOnMsg(@Msg);
  Sleep(1000);
  InitializeFrameBuffer;
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
@@ -352,13 +358,4 @@ begin
    Sleep(1000);
   end;
  end;
-end.
-
-procedure Msg (Sender : TObject; s : string);
-begin
-  ConsoleWindowWriteLn (WindowHandle, s);
-end;
-
-begin
-  SetOnMsg (@Msg);
 end.
