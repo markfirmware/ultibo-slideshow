@@ -16,7 +16,7 @@ uses
  StrUtils,SysUtils,Transport,Ultibo,Winsock2,
  VirtualDisk,
 
- uInit,uSlides;
+ uInit,uSlides,uTFTP;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
