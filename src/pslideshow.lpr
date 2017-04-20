@@ -310,12 +310,13 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
- Sleep(2000);
- CreateRamDisk;
+ Sleep(1000);
  InitializeFrameBuffer;
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
- IpAddress:=GetIpAddress;
  TestSerial;
+ LoggingOutput('');
+ IpAddress:=GetIpAddress;
+ CreateRamDisk;
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
