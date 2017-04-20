@@ -269,10 +269,43 @@ begin
  LoggingOutput(Format('IP address %s',[Result]));
 end;
 
+procedure CreateRamDisk;
+var
+ ImageNo:Integer;
+ Device:TDiskDevice;
+ Volume:TDiskVolume;
+ Drive:TDiskDrive;
+begin
+ ImageNo:=FileSysDriver.CreateImage(0,'NTFS RAM Disk',itMEMORY,mtFIXED,ftUNKNOWN,iaDisk or iaReadable or iaWriteable,512,204800,0,0,0,pidUnused);
+ if ImageNo <> 0 then
+  begin
+   if FileSysDriver.MountImage(ImageNo) then
+    begin
+     Device:=FileSysDriver.GetDeviceByImage(FileSysDriver.GetImageByNo(ImageNo,False,FILESYS_LOCK_NONE),False,FILESYS_LOCK_NONE);
+     if Device <> nil then
+      begin
+       Volume:=FileSysDriver.GetVolumeByDevice(Device,False,FILESYS_LOCK_NONE);
+       if Volume <> nil then
+        begin
+         if FileSysDriver.FormatVolume(Volume.Name,ftUNKNOWN,fsFAT12) then
+          begin
+           Drive:=FileSysDriver.GetDriveByVolume(Volume,False,FILESYS_LOCK_NONE);
+           if Drive <> nil then
+            begin
+             LoggingOutput(Format('Virtual disk %s',[Drive.Name]));
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
+ CreateRamDisk;
  InitializeFrameBuffer;
  Sleep(1000);
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
@@ -299,37 +332,6 @@ begin
    SlideNumber:=SlidesNextSlideNumber(SlideNumber);
    if SlideNumber = SlidesFirstSlideNumber then
     LoggingOutput('program stop');
-  end;
-end;
-
-procedure CreateRamDisk;
-var
- ImageNo:Integer;
- Device:TDiskDevice;
- Volume:TDiskVolume;
- Drive:TDiskDrive;
-begin
- ImageNo:=FileSysDriver.CreateImage(0,'NTFS RAM Disk',itMEMORY,mtFIXED,ftUNKNOWN,iaDisk or iaReadable or iaWriteable,512,204800,0,0,0,pidUnused);
- if ImageNo <> 0 then
-  begin
-   if FileSysDriver.MountImage(ImageNo) then
-    begin
-     Device:=FileSysDriver.GetDeviceByImage(FileSysDriver.GetImageByNo(ImageNo,False,FILESYS_LOCK_NONE),False,FILESYS_LOCK_NONE);
-     if Device <> nil then
-      begin
-       Volume:=FileSysDriver.GetVolumeByDevice(Device,False,FILESYS_LOCK_NONE);
-       if Volume <> nil then
-        begin
-         if FileSysDriver.FormatVolume(Volume.Name,ftUNKNOWN,fsFAT12) then
-          begin
-           Drive:=FileSysDriver.GetDriveByVolume(Volume,False,FILESYS_LOCK_NONE);
-           if Drive <> nil then
-            begin
-            end;
-          end;
-        end;
-      end;
-    end;
   end;
 end;
 
