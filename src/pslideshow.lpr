@@ -332,6 +332,14 @@ begin
  HTTPListener.Active:=True;
 end;
 
+procedure LogCommandLine;
+var
+ I:Cardinal;
+begin
+ for I:=0 to ParamCount - 1 do
+  LoggingOutput(Format('Param %d = %s',[I,ParamStr(I)]));
+end;
+
 procedure Main;
 begin
  DetermineEntryState;
@@ -340,6 +348,7 @@ begin
  InitializeFrameBuffer;
  TestSerial;
  LoggingOutput('');
+ LogCommandLine;
  IpAddress:=GetIpAddress;
  CreateRamDisk;
  StartHttpServer;
