@@ -1,10 +1,9 @@
 #!/bin/bash
 
-tftp localhost 5070 << __EOF__
+tftp localhost << __EOF__
 verbose
-binary
+mode octet
 trace
-rexmt 5
-timeout 5
+timeout 2
 put kernel.bin
 __EOF__

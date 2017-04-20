@@ -5,7 +5,7 @@ uses
  {$ifdef TARGET_RPI_INCLUDING_RPI0}  BCM2835,BCM2708,PlatformRPi      {$endif}
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
- {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
+ {$ifdef TARGET_QEMUVPB}             QEMUVersatilePB,PlatformQemuVpb, {$endif}
 
  VersatilePb, PL011,
  
@@ -18,7 +18,7 @@ uses
  uInit,uSlides,uTFTP;
 
 type
- TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
+ TTarget = (Rpi, Rpi2, Rpi3, QemuVpb);
 
 function TargetToString(Target:TTarget):String;
 begin
@@ -26,7 +26,7 @@ begin
   Rpi: TargetToString:='Rpi';
   Rpi2: TargetToString:='Rpi2';
   Rpi3: TargetToString:='Rpi3';
-  QemuArm7a: TargetToString:='QemuArm7a';
+  QemuVpb: TargetToString:='QemuVpb';
  end;
 end;
 
@@ -35,15 +35,15 @@ var
 
 procedure DetermineEntryState;
 begin
- Target:={$ifdef TARGET_RPI_INCLUDING_RPI0}  Rpi       {$endif}
-         {$ifdef TARGET_RPI2_INCLUDING_RPI3} Rpi2      {$endif}
-         {$ifdef TARGET_RPI3}                Rpi3      {$endif}
-         {$ifdef TARGET_QEMUARM7A}           QemuArm7a {$endif};
+ Target:={$ifdef TARGET_RPI_INCLUDING_RPI0}  Rpi     {$endif}
+         {$ifdef TARGET_RPI2_INCLUDING_RPI3} Rpi2    {$endif}
+         {$ifdef TARGET_RPI3}                Rpi3    {$endif}
+         {$ifdef TARGET_QEMUVPB}             QemuVpb {$endif};
 end;
 
 procedure StartLogging;
 begin
- if (Target = QemuArm7a) then
+ if (Target = QemuVpb) then
   begin
    SERIAL_REGISTER_LOGGING:=True;
    SerialLoggingDeviceAdd(SerialDeviceGetDefault);
@@ -371,8 +371,8 @@ begin
   begin
    WriteLn(Format('Exception.Message %s',[E.Message]));
    LoggingOutput(Format('Exception.Message %s',[E.Message]));
-   LoggingOutput('program stop');
-   Sleep(1000);
+   Sleep(5000);
   end;
  end;
+ LoggingOutput('program stop');
 end.

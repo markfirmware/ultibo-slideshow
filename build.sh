@@ -215,7 +215,7 @@ function build-as {
             mkdir -p $FOLDER/$OUTPUT
             case $TARGET in
                 QEMU)
-                    build-lpr $LPR_FILE "-CpARMV7A -WpQEMUVPB" qemuvpb.cfg $FOLDER TARGET_QEMUARM7A
+                    build-lpr $LPR_FILE "-CpARMV7A -WpQEMUVPB" qemuvpb.cfg $FOLDER TARGET_QEMUVPB
                     test-qemu-target $FOLDER ;;
                 RPi)
                     build-lpr $LPR_FILE "-CpARMV6 -WpRPIB" rpi.cfg $FOLDER TARGET_RPI_INCLUDING_RPI0 ;;
