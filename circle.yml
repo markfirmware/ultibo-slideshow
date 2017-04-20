@@ -1,7 +1,7 @@
 version: 2
 executorType: docker
 containerInfo:
-  - image: markfirmware/ultibo-docker2-x64-1.3.245-rc3@sha256:0f8ca2f9d375b570d30afb4b2cdea88e711e27abbc00edc04b217d309f084961
+  - image: markfirmware/ultibo-docker2-x64-1.3.245-rc4@sha256:8663f775f78e3da668f8b323f18d11ed5ea7d5dfd3a10961c39fed13db35d160
 # - image: markfirmware/ultibo-docker2-x64-1.3.245-dbg-rc1@sha256:a4649b9dd6d08a8d0cf917941f96c656b8f8245f045c699634c434fd9e832612
 stages:
   build:
