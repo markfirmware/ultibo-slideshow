@@ -6,5 +6,5 @@ binary
 trace
 rexmt 5
 timeout 5
-put README.md
+put kernel.bin
 __EOF__
