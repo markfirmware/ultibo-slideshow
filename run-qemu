@@ -77,13 +77,13 @@ def bash (lines):
 
 bash (['rm -rf {}/'.format (outputfolder),
        'mkdir -p {}'.format (outputfolder)])
-#                                "-net user,hostfwd=tcp::5023-:23,hostfwd=udp::5069-:69",
 
 qemuprocess = subprocess.Popen (["qemu-system-arm",
                                  "-M", "versatilepb",
                                  "-cpu", "cortex-a8",
                                  "-kernel", "kernel.bin",
                                  "-m", "256M",
+                                 "-net user,hostfwd=tcp::5023-:23,hostfwd=udp::5069-:69",
                                  "-usb",
                                  "-display", "none",
                                  "-monitor", "tcp:127.0.0.1:38004,server",

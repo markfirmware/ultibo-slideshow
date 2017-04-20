@@ -10,14 +10,13 @@ uses
  VersatilePb, PL011,
  
  Classes,Crt,Console,Devices,Framebuffer,
- //FATFS,FileSystem,
- GlobalConfig,GlobalConst,//GlobalSock,
-// Ip,Logging,Network,Platform,RemoteShell,Serial,ShellFilesystem,
- Ip,Logging,Network,Platform,Serial,
+ FATFS,FileSystem,
+ GlobalConfig,GlobalConst,
+ Ip,Logging,Network,Platform,RemoteShell,Serial,ShellFilesystem,
  StrUtils,SysUtils,Transport,Ultibo,Winsock2,
-// VirtualDisk,
+ VirtualDisk,
 
- uInit,uSlides;//,uTFTP;
+ uInit,uSlides;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
@@ -262,7 +261,7 @@ var
 function GetIpAddress:String;
 begin
  Result:=Winsock2TCPClient.LocalAddress;
- while (IpAddress = '') or (IpAddress = '0.0.0.0') or (IpAddress = '255.255.255.255') do
+ while (Result = '') or (Result = '0.0.0.0') or (Result = '255.255.255.255') do
   begin
    Sleep(100);
    Result:=Winsock2TCPClient.LocalAddress;
@@ -303,28 +302,6 @@ begin
   end;
 end;
 
-begin
- try
-  Main;
- except on E:Exception do
-  begin
-   WriteLn(Format('Exception.Message %s',[E.Message]));
-   LoggingOutput(Format('Exception.Message %s',[E.Message]));
-   LoggingOutput('program stop');
-   Sleep(1000);
-  end;
- end;
-end.
-
-procedure Msg (Sender : TObject; s : string);
-begin
-  ConsoleWindowWriteLn (WindowHandle, s);
-end;
-
-begin
-  SetOnMsg (@Msg);
-end.
-
 procedure CreateRamDisk;
 var
  ImageNo:Integer;
@@ -355,3 +332,25 @@ begin
     end;
   end;
 end;
+
+begin
+ try
+  Main;
+ except on E:Exception do
+  begin
+   WriteLn(Format('Exception.Message %s',[E.Message]));
+   LoggingOutput(Format('Exception.Message %s',[E.Message]));
+   LoggingOutput('program stop');
+   Sleep(1000);
+  end;
+ end;
+end.
+
+procedure Msg (Sender : TObject; s : string);
+begin
+  ConsoleWindowWriteLn (WindowHandle, s);
+end;
+
+begin
+  SetOnMsg (@Msg);
+end.

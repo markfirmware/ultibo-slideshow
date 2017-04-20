@@ -88,6 +88,8 @@ function test-qemu-target {
     \
 #   make-qemu-script && \
 #   run-qemu
+    pwd
+    echo $RESTORE_PWD
     time python $RESTORE_PWD/run-qemu
     if [[ $? -ne 0 ]]; then log fail: $?; fi
 
