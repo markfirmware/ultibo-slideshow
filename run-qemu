@@ -148,6 +148,7 @@ def runold ():
 def run ():
     global stopping
     stopping = False
+    print "draining"
     while not stopping:
         drainall ("not stopping")
     print "stopping"
