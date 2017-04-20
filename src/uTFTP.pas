@@ -16,6 +16,7 @@ interface
 uses
   GlobalConfig,
   GlobalConst,
+  Logging,
   Platform,
   Threads,
   SysUtils,
@@ -514,6 +515,7 @@ begin
     begin
       TFTP := TTFTPListener.Create;
       TFTP.Active := true;
+      LoggingOutput ('tftp started');
     end;
 end;
 
