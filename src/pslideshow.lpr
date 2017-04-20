@@ -12,9 +12,8 @@ uses
  Classes,Crt,Console,Devices,Framebuffer,
  FATFS,FileSystem,
  GlobalConfig,GlobalConst,
- Ip,Logging,Network,Platform,RemoteShell,Serial,ShellFilesystem,
- StrUtils,SysUtils,Transport,Ultibo,Winsock2,
- VirtualDisk,
+ HTTP,Ip,Logging,Network,Platform,RemoteShell,Serial,ShellFilesystem,
+ StrUtils,SysUtils,Transport,Ultibo,VirtualDisk,WebStatus,Winsock2,
 
  uInit,uSlides,uTFTP;
 
@@ -57,9 +56,6 @@ begin
    LoggingDeviceSetDefault(LoggingDeviceFindByType(LOGGING_TYPE_FILE));
   end;
 end;
-
-var
- Winsock2TCPClient:TWinsock2TCPClient;
 
 const
  ScreenWidth=1920;
@@ -257,15 +253,20 @@ end;
 
 var
  IpAddress:String;
+ HTTPListener:THTTPListener;
 
 function GetIpAddress:String;
+var
+ Winsock2TCPClient:TWinsock2TCPClient;
 begin
+ Winsock2TCPClient:=TWinsock2TCPClient.Create;
  Result:=Winsock2TCPClient.LocalAddress;
  while (Result = '') or (Result = '0.0.0.0') or (Result = '255.255.255.255') do
   begin
    Sleep(100);
    Result:=Winsock2TCPClient.LocalAddress;
   end;
+ Winsock2TCPClient.Free;
  LoggingOutput(Format('IP address %s',[Result]));
 end;
 
@@ -311,6 +312,21 @@ begin
  LoggingOutput(S);
 end;
 
+procedure StartHttpServer;
+var
+ HTTPFolder:THTTPFolder;
+begin
+ if DirectoryExists('C:\') and not(DirectoryExists('C:\files')) then
+  CreateDir('C:\files');
+ HTTPListener:=THTTPListener.Create;
+ HTTPFolder:=THTTPFolder.Create;
+ HTTPFolder.Name:='/files';
+ HTTPFolder.Folder:='C:\files';
+ HTTPListener.RegisterDocument('',HTTPFolder);
+ WebStatusRegister(HTTPListener,'','',True);
+ HTTPListener.Active:=True;
+end;
+
 procedure Main;
 begin
  DetermineEntryState;
@@ -319,11 +335,11 @@ begin
  TFTPStart;
  SetOnMsg(@Msg);
  InitializeFrameBuffer;
- Winsock2TCPClient:=TWinsock2TCPClient.Create;
  TestSerial;
  LoggingOutput('');
  IpAddress:=GetIpAddress;
  CreateRamDisk;
+ StartHttpServer;
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));

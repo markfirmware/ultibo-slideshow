@@ -44,6 +44,10 @@ class TcpChannel:
                         pass
                     elif c == '\n':
 #                       print '{}<<<<{}'.format(self.name, self.linebuffer)
+                        index = self.linebuffer.find ('TFTP Ready')
+                        if index != -1:
+#                           print self.linebuffer
+                            bash (['../../tftp.sh'])
                         index = self.linebuffer.find ('program stop')
                         if index != -1:
 #                           print self.linebuffer
@@ -72,7 +76,7 @@ class TcpChannel:
 
 def bash (lines):
     for line in lines:
-#       print 'bash >>', line
+        print 'bash >>', line
         subprocess.check_call (line, shell=True)
 
 bash (['rm -rf {}/'.format (outputfolder),
@@ -85,7 +89,7 @@ qemuprocess = subprocess.Popen (["qemu-system-arm",
                                  "-m", "256M",
                                  "-usb",
                                  "-net", "nic",
-                                 "-net", "user,hostfwd=tcp::5023-:23,hostfwd=udp::5069-:69",
+                                 "-net", "user,hostfwd=tcp::5023-:23,hostfwd=tcp::5069-:69,hostfwd=tcp::5080-:80",
                                  "-display", "none",
                                  "-monitor", "tcp:127.0.0.1:38004,server",
                                  "-serial", "tcp:127.0.0.1:38000,server",
