@@ -369,7 +369,8 @@ begin
     for LineNumber:= 1 to NumberOfLines do
      WriteLn(Lines[LineNumber]);
    LoggingOutput('frame end');
-   SaveFrameBuffer;
+   if InService then
+    SaveFrameBuffer;
    if InService then
     begin
      LoggingOutput('InService Sleep');
