@@ -105,8 +105,8 @@ serial = {}
 screennumber = 1
 framenumber = 1
 def drainall (message=""):
-    if message != "":
-        print "drainall " + message
+#   if message != "":
+#       print "drainall " + message
     for i in serial:
         serial [i].drain ()
     monitor.drain ()
@@ -150,8 +150,10 @@ def run ():
     stopping = False
     while not stopping:
         drainall ("not stopping")
+    print "stopping"
     drainall ("stopping")
     sleep (1)
+    print "one more before quit"
     drainall ("one more before quit")
     monitor.finishquit (qemuprocess)
 
