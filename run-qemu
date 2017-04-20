@@ -99,6 +99,7 @@ qemuprocess = subprocess.Popen (["qemu-system-arm",
                                  "-serial", "tcp:127.0.0.1:38003,server"],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
+print "qemu started"
 
 serial = {}
 screennumber = 1
