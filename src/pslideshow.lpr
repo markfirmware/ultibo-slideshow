@@ -332,13 +332,13 @@ begin
  DetermineEntryState;
  StartLogging;
  Sleep(1000);
- TFTPStart;
  SetOnMsg(@Msg);
  InitializeFrameBuffer;
  TestSerial;
  LoggingOutput('');
  IpAddress:=GetIpAddress;
  CreateRamDisk;
+ TFTPStart;
  StartHttpServer;
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
