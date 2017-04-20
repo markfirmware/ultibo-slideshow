@@ -365,6 +365,7 @@ var
   aTransfer : TTransfer;
   aFile : TFileStream;
 begin
+  DoMsg ('DoExecute');
   Result := inherited DoExecute (aThread);
   if not Result then exit;
   if aThread.Server.Count > 0 then
@@ -502,6 +503,7 @@ end;
 procedure TTFTPListener.DoCreateThread (aServer: TWinsock2UDPServer;
   var aThread: TWinsock2UDPServerThread);
 begin
+  DoMsg ('DoCreateThread');
   aThread := TFTPTransferThread.Create (aServer);
 end;
 
