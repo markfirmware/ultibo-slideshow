@@ -284,13 +284,13 @@ begin
     begin
      LoggingOutput('Mounted');
      Device:=FileSysDriver.GetDeviceByImage(FileSysDriver.GetImageByNo(ImageNo,False,FILESYS_LOCK_NONE),False,FILESYS_LOCK_NONE);
-     LoggingOutput(Format('Device %8.8x',[Pointer(Device)]));
      if Device <> nil then
       begin
+       LoggingOutput('Device');
        Volume:=FileSysDriver.GetVolumeByDevice(Device,False,FILESYS_LOCK_NONE);
-       LoggingOutput(Format('Volume %8.8x',[Pointer(Volume)]));
        if Volume <> nil then
         begin
+         LoggingOutput('Device');
          if FileSysDriver.FormatVolume(Volume.Name,ftUNKNOWN,fsFAT12) then
           begin
            LoggingOutput('Formatted');
