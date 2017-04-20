@@ -277,18 +277,23 @@ var
  Drive:TDiskDrive;
 begin
  ImageNo:=FileSysDriver.CreateImage(0,'NTFS RAM Disk',itMEMORY,mtFIXED,ftUNKNOWN,iaDisk or iaReadable or iaWriteable,512,204800,0,0,0,pidUnused);
+ LoggingOutput(Format('ImageNo %d',[ImageNo]));
  if ImageNo <> 0 then
   begin
    if FileSysDriver.MountImage(ImageNo) then
     begin
+     LoggingOutput('Mounted');
      Device:=FileSysDriver.GetDeviceByImage(FileSysDriver.GetImageByNo(ImageNo,False,FILESYS_LOCK_NONE),False,FILESYS_LOCK_NONE);
+     LoggingOutput(Format('Device %8.8x',[Pointer(Device)]));
      if Device <> nil then
       begin
        Volume:=FileSysDriver.GetVolumeByDevice(Device,False,FILESYS_LOCK_NONE);
+       LoggingOutput(Format('Volume %8.8x',[Pointer(Volume)]));
        if Volume <> nil then
         begin
          if FileSysDriver.FormatVolume(Volume.Name,ftUNKNOWN,fsFAT12) then
           begin
+           LoggingOutput('Formatted');
            Drive:=FileSysDriver.GetDriveByVolume(Volume,False,FILESYS_LOCK_NONE);
            if Drive <> nil then
             begin
