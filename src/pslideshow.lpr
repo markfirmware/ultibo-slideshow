@@ -276,7 +276,7 @@ var
  Volume:TDiskVolume;
  Drive:TDiskDrive;
 begin
- ImageNo:=FileSysDriver.CreateImage(0,'NTFS RAM Disk',itMEMORY,mtFIXED,ftUNKNOWN,iaDisk or iaReadable or iaWriteable,512,204800,0,0,0,pidUnused);
+ ImageNo:=FileSysDriver.CreateImage(0,'RAM Disk',itMEMORY,mtREMOVABLE,ftUNKNOWN,iaDisk or iaReadable or iaWriteable,512,20480,0,0,0,pidUnused);
  LoggingOutput(Format('ImageNo %d',[ImageNo]));
  if ImageNo <> 0 then
   begin
@@ -290,7 +290,7 @@ begin
        Volume:=FileSysDriver.GetVolumeByDevice(Device,False,FILESYS_LOCK_NONE);
        if Volume <> nil then
         begin
-         LoggingOutput('Device');
+         LoggingOutput('Volume');
          if FileSysDriver.FormatVolume(Volume.Name,ftUNKNOWN,fsFAT12) then
           begin
            LoggingOutput('Formatted');
@@ -310,9 +310,9 @@ procedure Main;
 begin
  DetermineEntryState;
  StartLogging;
+ Sleep(1000);
  CreateRamDisk;
  InitializeFrameBuffer;
- Sleep(1000);
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
  IpAddress:=GetIpAddress;
  TestSerial;
