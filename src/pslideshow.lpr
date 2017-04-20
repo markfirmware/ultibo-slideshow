@@ -1,4 +1,3 @@
-program pSlideShow;
 {$mode delphi}{$h+}
 
 uses
@@ -372,7 +371,10 @@ begin
    LoggingOutput('frame end');
    SaveFrameBuffer;
    if InService then
-    Sleep(5*1000);
+    begin
+     LoggingOutput('InService Sleep');
+     Sleep(5*1000);
+    end;
    SlideNumber:=SlidesNextSlideNumber(SlideNumber);
    if SlideNumber = SlidesFirstSlideNumber then
     LoggingOutput('program stop');
