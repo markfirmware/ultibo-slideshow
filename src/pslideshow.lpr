@@ -317,6 +317,7 @@ begin
  StartLogging;
  SetOnMsg(@Msg);
  Sleep(1000);
+ TFTPStart;
  InitializeFrameBuffer;
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
  TestSerial;

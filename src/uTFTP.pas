@@ -105,7 +105,7 @@ type
     property RebootOnImg : boolean read FRebootOnImg write FRebootOnImg;
   end;
 
-
+procedure TFTPStart;
 procedure SetOnMsg (MsgProc : TMsgEvent);
 
 var
@@ -199,6 +199,7 @@ begin
   { Define custom thread }
   OnCreateThread := @DoCreateThread;
   TxStream := TMemoryStream.Create;
+  DoMsg ('tftp started');
 end;
 
 
@@ -519,7 +520,7 @@ end;
 
 initialization
 
-TFTPStart;
+//TFTPStart;
 
 end.
 
