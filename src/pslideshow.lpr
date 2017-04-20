@@ -6,10 +6,18 @@ uses
  {$ifdef TARGET_RPI2_INCLUDING_RPI3} BCM2836,BCM2709,PlatformRPi2     {$endif}
  {$ifdef TARGET_RPI3}                BCM2837,BCM2710,PlatformRPi3     {$endif}
  {$ifdef TARGET_QEMUARM7A}           QEMUVersatilePB,PlatformQemuVpb, {$endif}
+
  VersatilePb, PL011,
- Classes,Crt,Console,Devices,Framebuffer,GlobalConfig,GlobalConst,GlobalSock,
- Ip,Logging,Network,Platform,Serial,StrUtils,SysUtils,Transport,Winsock2,
- uInit,uSlides;
+ 
+ Classes,Crt,Console,Devices,Framebuffer,
+ //FATFS,FileSystem,
+ GlobalConfig,GlobalConst,//GlobalSock,
+// Ip,Logging,Network,Platform,RemoteShell,Serial,ShellFilesystem,
+ Ip,Logging,Network,Platform,Serial,
+ StrUtils,SysUtils,Transport,Ultibo,Winsock2,
+// VirtualDisk,
+
+ uInit,uSlides;//,uTFTP;
 
 type
  TTarget = (Rpi, Rpi2, Rpi3, QemuArm7a);
@@ -251,15 +259,15 @@ end;
 var
  IpAddress:String;
 
-procedure GetIpAddress;
+function GetIpAddress:String;
 begin
- IpAddress:=Winsock2TCPClient.LocalAddress;
+ Result:=Winsock2TCPClient.LocalAddress;
  while (IpAddress = '') or (IpAddress = '0.0.0.0') or (IpAddress = '255.255.255.255') do
   begin
    Sleep(100);
-   IpAddress:=Winsock2TCPClient.LocalAddress;
+   Result:=Winsock2TCPClient.LocalAddress;
   end;
- LoggingOutput(Format('IP address %s',[IpAddress]));
+ LoggingOutput(Format('IP address %s',[Result]));
 end;
 
 procedure Main;
@@ -269,7 +277,7 @@ begin
  InitializeFrameBuffer;
  Sleep(1000);
  Winsock2TCPClient:=TWinsock2TCPClient.Create;
- GetIpAddress;
+ IpAddress:=GetIpAddress;
  TestSerial;
  LoggingOutput('');
  LoggingOutput(Format('BoardType %s',[BoardTypeToString(BoardGetType)]));
@@ -307,3 +315,43 @@ begin
   end;
  end;
 end.
+
+procedure Msg (Sender : TObject; s : string);
+begin
+  ConsoleWindowWriteLn (WindowHandle, s);
+end;
+
+begin
+  SetOnMsg (@Msg);
+end.
+
+procedure CreateRamDisk;
+var
+ ImageNo:Integer;
+ Device:TDiskDevice;
+ Volume:TDiskVolume;
+ Drive:TDiskDrive;
+begin
+ ImageNo:=FileSysDriver.CreateImage(0,'NTFS RAM Disk',itMEMORY,mtFIXED,ftUNKNOWN,iaDisk or iaReadable or iaWriteable,512,204800,0,0,0,pidUnused);
+ if ImageNo <> 0 then
+  begin
+   if FileSysDriver.MountImage(ImageNo) then
+    begin
+     Device:=FileSysDriver.GetDeviceByImage(FileSysDriver.GetImageByNo(ImageNo,False,FILESYS_LOCK_NONE),False,FILESYS_LOCK_NONE);
+     if Device <> nil then
+      begin
+       Volume:=FileSysDriver.GetVolumeByDevice(Device,False,FILESYS_LOCK_NONE);
+       if Volume <> nil then
+        begin
+         if FileSysDriver.FormatVolume(Volume.Name,ftUNKNOWN,fsFAT12) then
+          begin
+           Drive:=FileSysDriver.GetDriveByVolume(Volume,False,FILESYS_LOCK_NONE);
+           if Drive <> nil then
+            begin
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;

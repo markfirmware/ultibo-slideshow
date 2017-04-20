@@ -77,6 +77,7 @@ def bash (lines):
 
 bash (['rm -rf {}/'.format (outputfolder),
        'mkdir -p {}'.format (outputfolder)])
+#                                "-net user,hostfwd=tcp::5023-:23,hostfwd=udp::5069-:69",
 
 qemuprocess = subprocess.Popen (["qemu-system-arm",
                                  "-M", "versatilepb",
