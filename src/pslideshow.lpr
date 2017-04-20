@@ -57,6 +57,11 @@ begin
   end;
 end;
 
+function InService:Boolean;
+begin
+ Result := not ((ParamCount >= 1) and (ParamStr(1)='postbuildtest'));
+end;
+
 const
  ScreenWidth=1920;
  ScreenHeight=1080;
@@ -343,7 +348,7 @@ begin
  LoggingOutput(Format('Ultibo Release %s %s %s',[ULTIBO_RELEASE_DATE,ULTIBO_RELEASE_NAME,ULTIBO_RELEASE_VERSION]));
  LogFeatures;
  TAdapterTool.Create.LogAdapters;
- TFTPStart;
+// TFTPStart;
  SetOnMsg(@Msg);
  SlideNumber:=SlidesFirstSlideNumber;
  while True do
@@ -357,7 +362,8 @@ begin
      WriteLn(Lines[LineNumber]);
    LoggingOutput('frame end');
    SaveFrameBuffer;
-   Sleep(5*1000);
+   if InService then
+    Sleep(5*1000);
    SlideNumber:=SlidesNextSlideNumber(SlideNumber);
    if SlideNumber = SlidesFirstSlideNumber then
     LoggingOutput('program stop');
@@ -371,7 +377,8 @@ begin
   begin
    WriteLn(Format('Exception.Message %s',[E.Message]));
    LoggingOutput(Format('Exception.Message %s',[E.Message]));
-   Sleep(5000);
+   if InService then
+    Sleep(5000);
   end;
  end;
  LoggingOutput('program stop');
