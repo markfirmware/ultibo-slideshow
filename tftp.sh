@@ -1,9 +1,9 @@
 #!/bin/bash
 
-tftp localhost << __EOF__
+atftp localhost 5069 << __EOF__
 verbose
 mode octet
 trace
 timeout 2
-put kernel.bin
+put a
 __EOF__

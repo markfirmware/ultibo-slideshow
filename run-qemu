@@ -30,7 +30,8 @@ class TcpChannel:
             self.logfile.write ('{}>>>>{}\n'.format (self.name, line))
         self.socket.sendall (line + '\r')
     def drain (self):
-#       print 'drain {}'.format (self.name)
+            quiet = True
+#           print 'drain {} '.format (self.name),
             while ([], [], []) != select.select ([self.socket], [], [], 0):
                 try:
                     data = self.socket.recv (4096)
@@ -38,6 +39,8 @@ class TcpChannel:
                     break
                 if data == "":
                     break
+                quiet = False
+                print len (data),
                 self.logfile.write (data)
                 for c in data:
                     if c == '\r':
@@ -64,6 +67,9 @@ class TcpChannel:
                     else:
                         self.linebuffer = self.linebuffer + c
                 sleep (0.001, self.name)
+            if not quiet:
+                print 'done'
+#           print 'done'
     def finishquit (self, process):
         while process.returncode == None:
             sleep (0.001, 'finishquit ' + self.name)
@@ -90,7 +96,7 @@ qemuprocess = subprocess.Popen (["qemu-system-arm",
                                  "-m", "256M",
                                  "-usb",
                                  "-net", "nic",
-                                 "-net", "user,hostfwd=tcp::5023-:23,hostfwd=udp::69-:69,hostfwd=tcp::5080-:80",
+                                 "-net", "user,hostfwd=tcp::5023-:23,hostfwd=udp::5069-:69,hostfwd=tcp::5080-:80",
                                  "-display", "none",
                                  "-monitor", "tcp:127.0.0.1:38004,server",
                                  "-serial", "tcp:127.0.0.1:38000,server",
@@ -123,9 +129,11 @@ def sleep (seconds, message=''):
 #   print 'sleep {} {}'.format (seconds, message)
     time.sleep (seconds)
 
+print "channels"
 monitor = TcpChannel ('qemumonitor', 38004)
 for i in range (4):
     serial [i] = TcpChannel ('serial{}'.format (i),  38000 + i)
+print "channels"
 
 def runold ():
     drainall ()
