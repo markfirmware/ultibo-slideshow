@@ -323,10 +323,10 @@ begin
  if DirectoryExists('C:\') and not(DirectoryExists('C:\files')) then
   CreateDir('C:\files');
  HTTPListener:=THTTPListener.Create;
- HTTPFolder:=THTTPFolder.Create;
- HTTPFolder.Name:='/files';
- HTTPFolder.Folder:='C:\files';
- HTTPListener.RegisterDocument('',HTTPFolder);
+ //HTTPFolder:=THTTPFolder.Create;
+ //HTTPFolder.Name:='/files';
+ //HTTPFolder.Folder:='C:\files';
+ //HTTPListener.RegisterDocument('',HTTPFolder);
  WebStatusRegister(HTTPListener,'','',True);
  HTTPListener.Active:=True;
 end;
