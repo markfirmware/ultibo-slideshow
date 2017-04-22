@@ -317,8 +317,8 @@ begin
 end;
 
 procedure StartHttpServer;
-var
- HTTPFolder:THTTPFolder;
+//var
+ //HTTPFolder:THTTPFolder;
 begin
  if DirectoryExists('C:\') and not(DirectoryExists('C:\files')) then
   CreateDir('C:\files');
