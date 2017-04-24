@@ -336,7 +336,7 @@ begin
   LoggingOutput('bad head ok');
  if not HTTPClient.GetString('http://10.0.2.15/status/platform',ResponseBody) then
   begin
-   LoggingOutput(Format('platform %s %d',[HTTPStatusToString(HTTPClient.ResponseStatus),HTTPClient.ResponseReason]))
+   LoggingOutput(Format('platform %s %s',[HTTPStatusToString(HTTPClient.ResponseStatus),HTTPClient.ResponseReason]))
   end;
  if HTTPClient.GetString('http://10.0.2.15/status/cpu',ResponseBody) then
   LoggingOutput('cpu ok');
