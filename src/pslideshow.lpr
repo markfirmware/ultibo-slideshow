@@ -317,7 +317,8 @@ begin
 end;
 
 procedure StartHttpServer;
-//var
+var
+ HTTPClient:THTTPClient;
 // HTTPFolder:THTTPFolder;
 begin
 // if DirectoryExists('C:\') and not(DirectoryExists('C:\files')) then
@@ -329,6 +330,11 @@ begin
 // HTTPListener.RegisterDocument('',HTTPFolder);
  WebStatusRegister(HTTPListener,'','',True);
  HTTPListener.Active:=True;
+ HTTPClient:=THTTPClient.Create;
+ if not HTTPClient.Head('http://locaxyzlhost/status') then
+  LoggingOutput('bad head ok');
+ if HTTPClient.Head('http://localhost/status') then
+  LoggingOutput('head ok');
 end;
 
 procedure LogCommandLine;
