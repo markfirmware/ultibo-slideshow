@@ -332,6 +332,8 @@ begin
  WebStatusRegister(HTTPListener,'','',True);
  HTTPListener.Active:=True;
  HTTPClient:=THTTPClient.Create;
+ if not HTTPClient.GetString('http://127.0.0.1/xstatus',ResponseBody) then
+  LoggingOutput('bad head ok');
  if HTTPClient.GetString('http://127.0.0.1/status',ResponseBody) then
   LoggingOutput('head ok');
 end;
