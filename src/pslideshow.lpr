@@ -332,13 +332,13 @@ begin
  WebStatusRegister(HTTPListener,'','',True);
  HTTPListener.Active:=True;
  HTTPClient:=THTTPClient.Create;
- if not HTTPClient.GetString('http://127.0.0.1/xstatus',ResponseBody) then
+ if not HTTPClient.GetString('http://10.0.2.15/xstatus',ResponseBody) then
   LoggingOutput('bad head ok');
- if HTTPClient.GetString('http://127.0.0.1/status/platform',ResponseBody) then
+ if HTTPClient.GetString('http://10.0.2.15/status/platform',ResponseBody) then
   LoggingOutput('platform ok');
- if HTTPClient.GetString('http://127.0.0.1/status/cpu',ResponseBody) then
+ if HTTPClient.GetString('http://10.0.2.15/status/cpu',ResponseBody) then
   LoggingOutput('cpu ok');
- if HTTPClient.GetString('http://127.0.0.1/status/clock',ResponseBody) then
+ if HTTPClient.GetString('http://10.0.2.15/status/clock',ResponseBody) then
   LoggingOutput('clock ok');
 end;
 
