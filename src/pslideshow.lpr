@@ -334,8 +334,10 @@ begin
  HTTPClient:=THTTPClient.Create;
  if not HTTPClient.GetString('http://10.0.2.15/xstatus',ResponseBody) then
   LoggingOutput('bad head ok');
- if HTTPClient.GetString('http://10.0.2.15/status/platform',ResponseBody) then
-  LoggingOutput('platform ok');
+ if not HTTPClient.GetString('http://10.0.2.15/status/platform',ResponseBody) then
+  begin
+   LoggingOutput(Format('platform %s %d',[HTTPStatusToString(HTTPClient.ResponseStatus),HTTPClient.ResponseReason]))
+  end;
  if HTTPClient.GetString('http://10.0.2.15/status/cpu',ResponseBody) then
   LoggingOutput('cpu ok');
  if HTTPClient.GetString('http://10.0.2.15/status/clock',ResponseBody) then
